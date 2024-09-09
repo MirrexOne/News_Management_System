@@ -1,4 +1,4 @@
-package dev.mirrex.abelovitsky_javaadvancedserver;
+package dev.mirrex;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
