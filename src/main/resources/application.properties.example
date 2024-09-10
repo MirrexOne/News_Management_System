@@ -1,0 +1,17 @@
+#spring.application.name=Rest-server
+
+#spring.datasource.url=
+#spring.datasource.username=
+#spring.datasource.password=
+
+#spring.data.jdbc.dialect=postgresql
+#spring.output.ansi.enabled=always
+#spring.jpa.show-sql=true
+#spring.jpa.hibernate.ddl-auto=update
+
+spring.application.name=Rest-server
+spring.datasource.url=jdbc:postgresql://localhost:5432/network
+spring.datasource.username=
+spring.datasource.password=
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
