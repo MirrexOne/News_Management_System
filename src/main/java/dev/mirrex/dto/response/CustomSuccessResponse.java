@@ -5,13 +5,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class CustomSuccessResponse<T> {
 
     private T data;
 
-    private int statusCode;
+    private int statusCode = 0;
 
-    private boolean success;
+    private boolean success = true;
+
+    public CustomSuccessResponse(T data) {
+        this.data = data;
+    }
 }

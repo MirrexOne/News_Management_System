@@ -1,4 +1,4 @@
-package dev.mirrex.userRepository;
+package dev.mirrex.repository;
 
 import dev.mirrex.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;

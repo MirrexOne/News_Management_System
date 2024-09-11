@@ -1,4 +1,4 @@
-package dev.mirrex.dto.userDto;
+package dev.mirrex.dto.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -10,11 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegisterUserDto {
-
-    @NotBlank
-    @Size(min = 3, max = 25)
-    private String name;
+public class AuthDto {
 
     @NotBlank
     @Email
@@ -23,10 +19,4 @@ public class RegisterUserDto {
 
     @NotBlank
     private String password;
-
-    private String avatar;
-
-    @NotBlank
-    @Size(min = 3, max = 25)
-    private String role;
 }

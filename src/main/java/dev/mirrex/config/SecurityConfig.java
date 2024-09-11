@@ -1,7 +1,5 @@
-package dev.mirrex.security;
+package dev.mirrex.config;
 
-import dev.mirrex.Jwt.JwtAuthenticationFilter;
-import dev.mirrex.Jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

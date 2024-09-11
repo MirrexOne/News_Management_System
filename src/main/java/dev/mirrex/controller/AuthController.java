@@ -1,9 +1,9 @@
 package dev.mirrex.controller;
 
 import dev.mirrex.dto.response.CustomSuccessResponse;
-import dev.mirrex.dto.userDto.AuthDto;
-import dev.mirrex.dto.userDto.LoginUserDto;
-import dev.mirrex.dto.userDto.RegisterUserDto;
+import dev.mirrex.dto.request.AuthDto;
+import dev.mirrex.dto.request.LoginUserDto;
+import dev.mirrex.dto.request.RegisterUserDto;
 import dev.mirrex.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package dev.mirrex.dto.userDto;
+package dev.mirrex.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
