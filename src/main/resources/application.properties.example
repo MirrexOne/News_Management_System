@@ -4,8 +4,8 @@ spring.data.jdbc.dialect=postgresql
 spring.output.ansi.enabled=always
 spring.jpa.show-sql=true
 spring.datasource.url=jdbc:postgresql://localhost:5432/network
-spring.datasource.password=j
-spring.datasource.username=crucial
+spring.datasource.password=
+spring.datasource.username=
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
 

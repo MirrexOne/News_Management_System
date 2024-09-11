@@ -1,12 +1,12 @@
 package dev.mirrex.service;
 
-import dev.mirrex.Jwt.JwtTokenProvider;
+import dev.mirrex.config.JwtTokenProvider;
 import dev.mirrex.dto.response.CustomSuccessResponse;
-import dev.mirrex.dto.userDto.AuthDto;
-import dev.mirrex.dto.userDto.LoginUserDto;
-import dev.mirrex.dto.userDto.RegisterUserDto;
+import dev.mirrex.dto.request.AuthDto;
+import dev.mirrex.dto.request.LoginUserDto;
+import dev.mirrex.dto.request.RegisterUserDto;
 import dev.mirrex.model.User;
-import dev.mirrex.userRepository.UserRepository;
+import dev.mirrex.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -46,7 +46,7 @@ public class UserService {
                 token
         );
 
-        return new CustomSuccessResponse<>(loginUserDto, 0, true);
+        return new CustomSuccessResponse<>(loginUserDto);
     }
 
     public CustomSuccessResponse<LoginUserDto> loginUser(AuthDto authDto) {
@@ -68,6 +68,6 @@ public class UserService {
                 token
         );
 
-        return new CustomSuccessResponse<>(loginUserDto, 0, true);
+        return new CustomSuccessResponse<>(loginUserDto);
     }
 }

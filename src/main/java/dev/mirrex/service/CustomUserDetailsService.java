@@ -1,7 +1,7 @@
-package dev.mirrex.security;
+package dev.mirrex.service;
 
 import dev.mirrex.model.User;
-import dev.mirrex.userRepository.UserRepository;
+import dev.mirrex.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
