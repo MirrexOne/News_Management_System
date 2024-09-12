@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+import static dev.mirrex.util.Constants.BEARER;
 
 @Component
 public class JwtTokenProvider {
@@ -35,7 +36,7 @@ public class JwtTokenProvider {
     }
 
     private String createToken(Map<String, Object> claims, String subject) {
-        return Jwts.builder()
+        return BEARER + Jwts.builder()
                 .setClaims(claims)
                 .setSubject(subject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
