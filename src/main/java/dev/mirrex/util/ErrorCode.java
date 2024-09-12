@@ -19,7 +19,7 @@ public enum ErrorCode {
     UNAUTHORISED(7, "unauthorised"),
     USER_EMAIL_NOT_NULL(8, "user email mustn't be null"),
     USER_PASSWORD_NOT_VALID(9, "user password must be more than 6 symbols"),
-    USER_ROLE_NOT_NULL(10, "user role mustn't be null"),
+    USER_ROLE_NOT_NULL(10, ValidationConstants.USER_ROLE_NOT_NULL),
     NEWS_DESCRIPTION_SIZE(11, ValidationConstants.NEWS_DESCRIPTION_SIZE_NOT_VALID),
     NEWS_DESCRIPTION_NOT_NULL(12, ValidationConstants.NEWS_DESCRIPTION_HAS_TO_BE_PRESENT),
     NEWS_TITLE_SIZE(13, "news title size not valid"),
