@@ -1,15 +1,17 @@
 package dev.mirrex.dto.request;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
-@NoArgsConstructor
+@Getter
+@Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class LoginUserDto {
 
-    private String id;
+    private Long id;
 
     private String name;
 

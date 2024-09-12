@@ -4,19 +4,21 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
-@NoArgsConstructor
+@Getter
+@Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class AuthDto {
 
     @NotBlank
-    @Email
+    @Email(message = "Email should be greater than 3 and less or equals 100 symbols")
     @Size(min = 3, max = 100)
     private String email;
 
-    @NotBlank
+    @NotBlank(message = "Password should not be blank")
     private String password;
 }
