@@ -15,6 +15,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 
+import static dev.mirrex.util.Constants.UNAUTHORIZED;
+
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
@@ -37,7 +39,7 @@ public class SecurityConfig {
                 .exceptionHandling(exceptionHandling -> exceptionHandling
                         .authenticationEntryPoint((request, response, authException) -> {
                             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                            response.getWriter().write("Unauthorized");
+                            response.getWriter().write(UNAUTHORIZED);
                         })
                 );
 
