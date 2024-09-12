@@ -1,7 +1,7 @@
 package dev.mirrex.mapper;
 
-import dev.mirrex.dto.request.RegisterUserDto;
-import dev.mirrex.dto.request.LoginUserDto;
+import dev.mirrex.dto.request.RegisterUserDtoRequest;
+import dev.mirrex.dto.request.LoginUserDtoRequest;
 import dev.mirrex.model.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -11,8 +11,8 @@ public interface UserMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "password", ignore = true)
-    User toUser(RegisterUserDto registerUserDto);
+    User toUser(RegisterUserDtoRequest registerUserDtoRequest);
 
     @Mapping(target = "token", ignore = true)
-    LoginUserDto toLoginUserDto(User user);
+    LoginUserDtoRequest toLoginUserDto(User user);
 }
