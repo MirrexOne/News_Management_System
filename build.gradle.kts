@@ -22,6 +22,8 @@ dependencies {
     annotationProcessor("org.mapstruct:mapstruct-processor:1.6.0")
     implementation("org.projectlombok:lombok")
     compileOnly("org.projectlombok:lombok")
+    annotationProcessor("org.projectlombok:lombok-mapstruct-binding:0.2.0")
+    implementation("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
