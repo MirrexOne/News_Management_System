@@ -8,6 +8,4 @@ import dev.mirrex.dto.response.CustomSuccessResponse;
 public interface UserService {
 
     CustomSuccessResponse<LoginUserDto> registerUser(RegisterUserDto registerUserDto);
-
-    CustomSuccessResponse<LoginUserDto> loginUser(AuthDto authDto);
 }
