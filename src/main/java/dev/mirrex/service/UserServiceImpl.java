@@ -2,8 +2,8 @@ package dev.mirrex.service;
 
 import dev.mirrex.config.JwtTokenProvider;
 import dev.mirrex.dto.response.CustomSuccessResponse;
-import dev.mirrex.dto.request.LoginUserDtoRequest;
-import dev.mirrex.dto.request.RegisterUserDtoRequest;
+import dev.mirrex.dto.request.LoginUserRequest;
+import dev.mirrex.dto.request.RegisterUserRequest;
 import dev.mirrex.exception.CustomException;
 import dev.mirrex.mapper.UserMapper;
 import dev.mirrex.model.User;
@@ -29,18 +29,18 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
 
     @Override
-    public CustomSuccessResponse<LoginUserDtoRequest> registerUser(RegisterUserDtoRequest registerUserDtoRequest) {
-        if (userRepository.existsByEmail(registerUserDtoRequest.getEmail())) {
+    public CustomSuccessResponse<LoginUserRequest> registerUser(RegisterUserRequest registerUserRequest) {
+        if (userRepository.existsByEmail(registerUserRequest.getEmail())) {
             throw new CustomException(ErrorCode.USER_ALREADY_EXISTS);
         }
 
-        User user = userMapper.toUser(registerUserDtoRequest);
-        user.setPassword(passwordEncoder.encode(registerUserDtoRequest.getPassword()));
+        User user = userMapper.toUser(registerUserRequest);
+        user.setPassword(passwordEncoder.encode(registerUserRequest.getPassword()));
 
         User savedUser = userRepository.save(user);
-        LoginUserDtoRequest loginUserDtoRequest = userMapper.toLoginUserDto(savedUser);
-        loginUserDtoRequest.setToken(jwtTokenProvider.generateToken(savedUser.getEmail()));
+        LoginUserRequest loginUserRequest = userMapper.toLoginUserDto(savedUser);
+        loginUserRequest.setToken(jwtTokenProvider.generateToken(savedUser.getEmail()));
 
-        return new CustomSuccessResponse<>(loginUserDtoRequest);
+        return new CustomSuccessResponse<>(loginUserRequest);
     }
 }
