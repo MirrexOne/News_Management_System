@@ -7,12 +7,11 @@ import java.util.List;
 
 @Getter
 @Setter
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class CustomSuccessResponse<T> extends BaseSuccessResponse {
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private T data;
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<Integer> codes;
 
     public CustomSuccessResponse(T data) {
