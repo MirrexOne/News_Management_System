@@ -1,10 +1,10 @@
 package dev.mirrex.service;
 
-import dev.mirrex.dto.request.LoginUserDto;
-import dev.mirrex.dto.request.RegisterUserDto;
+import dev.mirrex.dto.request.LoginUserDtoRequest;
+import dev.mirrex.dto.request.RegisterUserDtoRequest;
 import dev.mirrex.dto.response.CustomSuccessResponse;
 
 public interface UserService {
 
-    CustomSuccessResponse<LoginUserDto> registerUser(RegisterUserDto registerUserDto);
+    CustomSuccessResponse<LoginUserDtoRequest> registerUser(RegisterUserDtoRequest registerUserDtoRequest);
 }
