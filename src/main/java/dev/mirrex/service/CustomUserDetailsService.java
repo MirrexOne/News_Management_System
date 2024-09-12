@@ -1,5 +1,6 @@
 package dev.mirrex.service;
 
+import dev.mirrex.exception.CustomException;
 import dev.mirrex.model.User;
 import dev.mirrex.repository.UserRepository;
 import dev.mirrex.util.ErrorCode;
@@ -18,7 +19,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException(ErrorCode.USER_NOT_FOUND.getMessage()));
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
         return org.springframework.security.core.userdetails.User
                 .withUsername(user.getEmail())
