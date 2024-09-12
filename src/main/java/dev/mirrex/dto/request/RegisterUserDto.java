@@ -1,34 +1,31 @@
 package dev.mirrex.dto.request;
 
+import dev.mirrex.util.ValidationConstants;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 public class RegisterUserDto {
 
-    @NotBlank(message = "Name should be greater than 3 and less or equals 25 symbols")
-    @Size(min = 3, max = 25)
+    @NotBlank(message = ValidationConstants.USER_NAME_HAS_TO_BE_PRESENT)
+    @Size(min = 3, max = 25, message = ValidationConstants.USERNAME_SIZE_NOT_VALID)
     private String name;
 
-    @NotBlank
-    @Email(message = "Email should be greater than 3 and less or equals 100 symbols")
-    @Size(min = 3, max = 100)
+    @NotBlank(message = ValidationConstants.USER_EMAIL_NOT_NULL)
+    @Email(message = ValidationConstants.USER_EMAIL_NOT_VALID)
+    @Size(min = 3, max = 100, message = ValidationConstants.EMAIL_SIZE_NOT_VALID)
     private String email;
 
-    @NotBlank(message = "Password should not be blank")
+    @NotBlank(message = ValidationConstants.PASSWORD_NOT_VALID)
     private String password;
 
     private String avatar;
 
-    @NotBlank(message = "Role should be greater than 3 and less or equals 25 symbols")
-    @Size(min = 3, max = 25)
+    @NotBlank(message = ValidationConstants.ROLE_SIZE_NOT_VALID)
+    @Size(min = 3, max = 25, message = ValidationConstants.ROLE_SIZE_NOT_VALID)
     private String role;
 }
