@@ -1,8 +1,8 @@
 package dev.mirrex.controller;
 
 import dev.mirrex.dto.response.CustomSuccessResponse;
-import dev.mirrex.dto.request.LoginUserDto;
-import dev.mirrex.dto.request.RegisterUserDto;
+import dev.mirrex.dto.request.LoginUserDtoRequest;
+import dev.mirrex.dto.request.RegisterUserDtoRequest;
 import dev.mirrex.service.UserServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,8 +21,10 @@ public class AuthController {
     private final UserServiceImpl userServiceImpl;
 
     @PostMapping(value = "/register", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CustomSuccessResponse<LoginUserDto>> registerUser(
-            @Valid @RequestBody RegisterUserDto registerUserDto) {
-        return ResponseEntity.ok().body(userServiceImpl.registerUser(registerUserDto));
+    public ResponseEntity<CustomSuccessResponse<LoginUserDtoRequest>> registerUser(
+            @Valid @RequestBody RegisterUserDtoRequest registerUserDtoRequest) {
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(userServiceImpl.registerUser(registerUserDtoRequest));
     }
 }
