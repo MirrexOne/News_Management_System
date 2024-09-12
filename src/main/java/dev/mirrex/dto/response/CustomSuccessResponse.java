@@ -9,6 +9,7 @@ import java.util.List;
 @Setter
 public class CustomSuccessResponse<T> extends BaseSuccessResponse {
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private T data;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
