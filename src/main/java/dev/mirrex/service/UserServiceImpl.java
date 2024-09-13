@@ -5,6 +5,7 @@ import dev.mirrex.dto.request.AuthRequest;
 import dev.mirrex.dto.response.CustomSuccessResponse;
 import dev.mirrex.dto.request.LoginUserRequest;
 import dev.mirrex.dto.request.RegisterUserRequest;
+import dev.mirrex.dto.response.PublicUserViewResponse;
 import dev.mirrex.exception.CustomException;
 import dev.mirrex.mapper.UserMapper;
 import dev.mirrex.model.User;
@@ -18,6 +19,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -51,21 +54,24 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public CustomSuccessResponse<LoginUserRequest> loginUser(AuthRequest authDto) {
-        try {
-            Authentication authentication = authenticationManager
-                    .authenticate(new UsernamePasswordAuthenticationToken(authDto.getEmail(), authDto.getPassword()));
+        User user = userRepository.findByEmail(authDto.getEmail())
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-
-            User user = userRepository.findByEmail(authDto.getEmail())
-                    .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
-
-            LoginUserRequest loginUserDto = userMapper.toLoginUserDto(user);
-            loginUserDto.setToken(jwtTokenProvider.generateToken(user.getEmail()));
-
-            return new CustomSuccessResponse<>(loginUserDto);
-        } catch (AuthenticationException e) {
-            throw new CustomException(ErrorCode.USER_NOT_FOUND);
+        if (!passwordEncoder.matches(authDto.getPassword(), user.getPassword())) {
+            throw new CustomException(ErrorCode.PASSWORD_NOT_VALID);
         }
+
+        LoginUserRequest loginUserDto = userMapper.toLoginUserDto(user);
+        loginUserDto.setToken(jwtTokenProvider.generateToken(user.getEmail()));
+
+        return new CustomSuccessResponse<>(loginUserDto);
+    }
+
+    @Override
+    public CustomSuccessResponse<List<PublicUserViewResponse>> getAllUsers() {
+        List<PublicUserViewResponse> users = userRepository.findAll()
+                .stream()
+                .map(userMapper::toPublicUserView).toList();
+        return new CustomSuccessResponse<>(users);
     }
 }

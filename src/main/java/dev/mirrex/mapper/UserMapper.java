@@ -2,6 +2,7 @@ package dev.mirrex.mapper;
 
 import dev.mirrex.dto.request.RegisterUserRequest;
 import dev.mirrex.dto.request.LoginUserRequest;
+import dev.mirrex.dto.response.PublicUserViewResponse;
 import dev.mirrex.model.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -15,4 +16,6 @@ public interface UserMapper {
 
     @Mapping(target = "token", ignore = true)
     LoginUserRequest toLoginUserDto(User user);
+
+    PublicUserViewResponse toPublicUserView(User user);
 }
