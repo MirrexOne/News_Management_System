@@ -67,4 +67,13 @@ public class UserServiceImpl implements UserService {
                 .toList();
         return new CustomSuccessResponse<>(users);
     }
+
+    @Override
+    public CustomSuccessResponse<PublicUserViewResponse> getUserInfoById(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new CustomException(ErrorCode.MAX_UPLOAD_SIZE_EXCEEDED));
+
+        PublicUserViewResponse publicUserView = userMapper.toPublicUserView(user);
+        return new CustomSuccessResponse<>(publicUserView);
+    }
 }
