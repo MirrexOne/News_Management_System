@@ -1,6 +1,7 @@
 package dev.mirrex.service;
 
 import dev.mirrex.config.JwtTokenProvider;
+import dev.mirrex.dto.request.AuthRequest;
 import dev.mirrex.dto.response.CustomSuccessResponse;
 import dev.mirrex.dto.request.LoginUserRequest;
 import dev.mirrex.dto.request.RegisterUserRequest;
@@ -10,7 +11,6 @@ import dev.mirrex.model.User;
 import dev.mirrex.repository.UserRepository;
 import dev.mirrex.util.ErrorCode;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -23,8 +23,6 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
     private final JwtTokenProvider jwtTokenProvider;
-
-    private final AuthenticationManager authenticationManager;
 
     private final UserMapper userMapper;
 
@@ -42,5 +40,20 @@ public class UserServiceImpl implements UserService {
         loginUserRequest.setToken(jwtTokenProvider.generateToken(savedUser.getEmail()));
 
         return new CustomSuccessResponse<>(loginUserRequest);
+    }
+
+    @Override
+    public CustomSuccessResponse<LoginUserRequest> loginUser(AuthRequest authDto) {
+        User user = userRepository.findByEmail(authDto.getEmail())
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+
+        if (!passwordEncoder.matches(authDto.getPassword(), user.getPassword())) {
+            throw new CustomException(ErrorCode.PASSWORD_NOT_VALID);
+        }
+
+        LoginUserRequest loginUserDto = userMapper.toLoginUserDto(user);
+        loginUserDto.setToken(jwtTokenProvider.generateToken(user.getEmail()));
+
+        return new CustomSuccessResponse<>(loginUserDto);
     }
 }
