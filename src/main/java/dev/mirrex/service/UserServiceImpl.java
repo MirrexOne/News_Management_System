@@ -12,14 +12,8 @@ import dev.mirrex.model.User;
 import dev.mirrex.repository.UserRepository;
 import dev.mirrex.util.ErrorCode;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -31,8 +25,6 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
     private final JwtTokenProvider jwtTokenProvider;
-
-    private final AuthenticationManager authenticationManager;
 
     private final UserMapper userMapper;
 
@@ -71,7 +63,8 @@ public class UserServiceImpl implements UserService {
     public CustomSuccessResponse<List<PublicUserViewResponse>> getAllUsers() {
         List<PublicUserViewResponse> users = userRepository.findAll()
                 .stream()
-                .map(userMapper::toPublicUserView).toList();
+                .map(userMapper::toPublicUserView)
+                .toList();
         return new CustomSuccessResponse<>(users);
     }
 }
