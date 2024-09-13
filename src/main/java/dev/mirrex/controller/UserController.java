@@ -31,4 +31,10 @@ public class UserController {
         return ResponseEntity.ok()
                 .body(userServiceImpl.getUserInfoById(id));
     }
+
+    @GetMapping("/info")
+    public ResponseEntity<CustomSuccessResponse<PublicUserViewResponse>> getUserInfo() {
+        return ResponseEntity.ok()
+                .body(userServiceImpl.getUserInfo());
+    }
 }
