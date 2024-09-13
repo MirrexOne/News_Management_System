@@ -14,4 +14,6 @@ public interface UserService {
     CustomSuccessResponse<LoginUserRequest> loginUser(AuthRequest authDto);
 
     CustomSuccessResponse<List<PublicUserViewResponse>> getAllUsers();
+
+    CustomSuccessResponse<PublicUserViewResponse> getUserInfoById(Long id);
 }
