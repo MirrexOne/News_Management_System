@@ -28,8 +28,6 @@ public class UserServiceImpl implements UserService {
 
     private final JwtTokenProvider jwtTokenProvider;
 
-    private final AuthenticationManager authenticationManager;
-
     private final UserMapper userMapper;
 
     @Override
