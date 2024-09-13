@@ -1,5 +1,6 @@
 package dev.mirrex.controller;
 
+import dev.mirrex.dto.request.AuthRequest;
 import dev.mirrex.dto.response.CustomSuccessResponse;
 import dev.mirrex.dto.request.LoginUserRequest;
 import dev.mirrex.dto.request.RegisterUserRequest;
@@ -19,10 +20,17 @@ public class AuthController {
 
     private final UserServiceImpl userServiceImpl;
 
-    @PostMapping(value = "/register")
+    @PostMapping("/register")
     public ResponseEntity<CustomSuccessResponse<LoginUserRequest>> registerUser(
             @Valid @RequestBody RegisterUserRequest registerUserRequest) {
         return ResponseEntity.ok()
                 .body(userServiceImpl.registerUser(registerUserRequest));
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<CustomSuccessResponse<LoginUserRequest>> loginUser(
+            @Valid @RequestBody AuthRequest authRequest) {
+        return ResponseEntity.ok()
+                .body(userServiceImpl.loginUser(authRequest));
     }
 }
