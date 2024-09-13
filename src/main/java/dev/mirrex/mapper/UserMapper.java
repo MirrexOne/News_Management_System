@@ -18,4 +18,8 @@ public interface UserMapper {
     LoginUserRequest toLoginUserDto(User user);
 
     PublicUserViewResponse toPublicUserView(User user);
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "password", ignore = true)
+    User toUser(PublicUserViewResponse publicUserView);
 }
