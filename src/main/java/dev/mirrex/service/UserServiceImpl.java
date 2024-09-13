@@ -12,6 +12,9 @@ import dev.mirrex.model.User;
 import dev.mirrex.repository.UserRepository;
 import dev.mirrex.util.ErrorCode;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -75,5 +78,19 @@ public class UserServiceImpl implements UserService {
 
         PublicUserViewResponse publicUserView = userMapper.toPublicUserView(user);
         return new CustomSuccessResponse<>(publicUserView);
+    }
+
+    @Override
+    public CustomSuccessResponse<PublicUserViewResponse> getUserInfo() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (!(authentication instanceof UsernamePasswordAuthenticationToken)) {
+            throw new CustomException(ErrorCode.USER_NOT_AUTHENTICATED);
+        }
+
+        User user = userRepository.findByEmail(authentication.getName())
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+
+        return new CustomSuccessResponse<>(userMapper.toPublicUserView(user));
     }
 }

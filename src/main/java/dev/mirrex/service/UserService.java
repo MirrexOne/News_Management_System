@@ -16,4 +16,6 @@ public interface UserService {
     CustomSuccessResponse<List<PublicUserViewResponse>> getAllUsers();
 
     CustomSuccessResponse<PublicUserViewResponse> getUserInfoById(Long id);
+
+    CustomSuccessResponse<PublicUserViewResponse> getUserInfo();
 }

@@ -48,4 +48,5 @@ public interface ValidationConstants {
     String HTTP_MESSAGE_NOT_READABLE_EXCEPTION = "Http request not valid";
     String USER_ROLE_NOT_NULL = "user role mustn't be null";
     String USER_NOT_FOUND = "Could not find user";
+    String USER_NOT_AUTHENTICATED = "User is not authenticated";
 }
