@@ -27,6 +27,6 @@ public class RegisterUserRequest {
     private String avatar;
 
     @NotBlank(message = ValidationConstants.USER_ROLE_NOT_NULL)
-    @Size(min = 3, max = 25, message = ValidationConstants.ROLE_SIZE_NOT_VALID)
+    @Size(min = 3, max = 25)
     private String role;
 }
