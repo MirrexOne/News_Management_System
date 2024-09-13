@@ -14,7 +14,7 @@ public enum ErrorCode {
     ROLE_SIZE_NOT_VALID(2, "role size not valid"),
     EMAIL_SIZE_NOT_VALID(3, "email size not valid"),
     MUST_NOT_BE_NULL(4, "must not be null"),
-    USER_NOT_FOUND(5, "Could not find user"),
+    USER_NOT_FOUND(5, ValidationConstants.USER_NOT_FOUND),
     TOKEN_NOT_PROVIDED(6, "JWT token not provided"),
     UNAUTHORISED(7, "unauthorised"),
     USER_EMAIL_NOT_NULL(8, "user email mustn't be null"),
