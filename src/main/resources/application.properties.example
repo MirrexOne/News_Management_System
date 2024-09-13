@@ -1,0 +1,14 @@
+spring.application.name=Abelovitsky_JavaAdvancedServer
+
+spring.data.jdbc.dialect=postgresql
+spring.output.ansi.enabled=always
+spring.jpa.show-sql=true
+spring.datasource.url=
+spring.datasource.password=
+spring.datasource.username=
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+
+server.servlet.context-path=/api/v1
+jwt.secret=
+jwt.expiration=
