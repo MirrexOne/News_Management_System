@@ -5,7 +5,7 @@ import dev.mirrex.dto.request.AuthRequest;
 import dev.mirrex.dto.response.CustomSuccessResponse;
 import dev.mirrex.dto.request.LoginUserRequest;
 import dev.mirrex.dto.request.RegisterUserRequest;
-import dev.mirrex.dto.response.PublicUserViewResponse;
+import dev.mirrex.dto.response.PublicUserResponse;
 import dev.mirrex.exception.CustomException;
 import dev.mirrex.mapper.UserMapper;
 import dev.mirrex.model.User;
@@ -18,6 +18,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -25,46 +26,11 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
-    private final PasswordEncoder passwordEncoder;
-
-    private final JwtTokenProvider jwtTokenProvider;
-
     private final UserMapper userMapper;
 
     @Override
-    public CustomSuccessResponse<LoginUserRequest> registerUser(RegisterUserRequest registerUserRequest) {
-        if (userRepository.existsByEmail(registerUserRequest.getEmail())) {
-            throw new CustomException(ErrorCode.USER_ALREADY_EXISTS);
-        }
-
-        User user = userMapper.toUser(registerUserRequest);
-        user.setPassword(passwordEncoder.encode(registerUserRequest.getPassword()));
-
-        User savedUser = userRepository.save(user);
-        LoginUserRequest loginUserRequest = userMapper.toLoginUserDto(savedUser);
-        loginUserRequest.setToken(jwtTokenProvider.generateToken(savedUser.getEmail()));
-
-        return new CustomSuccessResponse<>(loginUserRequest);
-    }
-
-    @Override
-    public CustomSuccessResponse<LoginUserRequest> loginUser(AuthRequest authDto) {
-        User user = userRepository.findByEmail(authDto.getEmail())
-                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
-
-        if (!passwordEncoder.matches(authDto.getPassword(), user.getPassword())) {
-            throw new CustomException(ErrorCode.PASSWORD_NOT_VALID);
-        }
-
-        LoginUserRequest loginUserDto = userMapper.toLoginUserDto(user);
-        loginUserDto.setToken(jwtTokenProvider.generateToken(user.getEmail()));
-
-        return new CustomSuccessResponse<>(loginUserDto);
-    }
-
-    @Override
-    public CustomSuccessResponse<List<PublicUserViewResponse>> getAllUsers() {
-        List<PublicUserViewResponse> users = userRepository.findAll()
+    public CustomSuccessResponse<List<PublicUserResponse>> getAllUsers() {
+        List<PublicUserResponse> users = userRepository.findAll()
                 .stream()
                 .map(userMapper::toPublicUserView)
                 .toList();
@@ -72,16 +38,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public CustomSuccessResponse<PublicUserViewResponse> getUserInfoById(Long id) {
+    public CustomSuccessResponse<PublicUserResponse> getUserInfoById(UUID id) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new CustomException(ErrorCode.MAX_UPLOAD_SIZE_EXCEEDED));
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
-        PublicUserViewResponse publicUserView = userMapper.toPublicUserView(user);
+        PublicUserResponse publicUserView = userMapper.toPublicUserView(user);
         return new CustomSuccessResponse<>(publicUserView);
     }
 
     @Override
-    public CustomSuccessResponse<PublicUserViewResponse> getUserInfo() {
+    public CustomSuccessResponse<PublicUserResponse> getUserInfo() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (!(authentication instanceof UsernamePasswordAuthenticationToken)) {
