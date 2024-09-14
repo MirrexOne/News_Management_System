@@ -4,7 +4,7 @@ import dev.mirrex.dto.request.AuthRequest;
 import dev.mirrex.dto.response.CustomSuccessResponse;
 import dev.mirrex.dto.request.LoginUserRequest;
 import dev.mirrex.dto.request.RegisterUserRequest;
-import dev.mirrex.service.UserServiceImpl;
+import dev.mirrex.service.AuthServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,19 +18,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthController {
 
-    private final UserServiceImpl userServiceImpl;
+    private final AuthServiceImpl authService;
 
     @PostMapping("/register")
     public ResponseEntity<CustomSuccessResponse<LoginUserRequest>> registerUser(
             @Valid @RequestBody RegisterUserRequest registerUserRequest) {
         return ResponseEntity.ok()
-                .body(userServiceImpl.registerUser(registerUserRequest));
+                .body(authService.registerUser(registerUserRequest));
     }
 
     @PostMapping("/login")
     public ResponseEntity<CustomSuccessResponse<LoginUserRequest>> loginUser(
             @Valid @RequestBody AuthRequest authRequest) {
         return ResponseEntity.ok()
-                .body(userServiceImpl.loginUser(authRequest));
+                .body(authService.loginUser(authRequest));
     }
 }
