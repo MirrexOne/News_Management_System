@@ -17,6 +17,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -49,10 +50,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public CustomSuccessResponse<PublicUserResponse> getUserInfo() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        if (!(authentication instanceof UsernamePasswordAuthenticationToken)) {
-            throw new CustomException(ErrorCode.USER_NOT_AUTHENTICATED);
-        }
 
         User user = userRepository.findByEmail(authentication.getName())
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
