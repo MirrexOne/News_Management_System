@@ -20,6 +20,7 @@ repositories {
 dependencies {
     implementation("org.mapstruct:mapstruct:1.6.0")
     annotationProcessor("org.mapstruct:mapstruct-processor:1.6.0")
+    implementation("com.fasterxml.uuid:java-uuid-generator:4.0.1")
     implementation("org.projectlombok:lombok")
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok-mapstruct-binding:0.2.0")
