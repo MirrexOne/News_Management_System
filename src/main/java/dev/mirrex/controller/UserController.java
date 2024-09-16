@@ -1,6 +1,6 @@
 package dev.mirrex.controller;
 
-import dev.mirrex.dto.response.CustomSuccessResponse;
+import dev.mirrex.dto.response.baseResponse.CustomSuccessResponse;
 import dev.mirrex.dto.response.PublicUserResponse;
 import dev.mirrex.service.UserService;
 import dev.mirrex.util.Constants;

@@ -1,4 +1,4 @@
-package dev.mirrex.dto.response;
+package dev.mirrex.dto.response.baseResponse;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;

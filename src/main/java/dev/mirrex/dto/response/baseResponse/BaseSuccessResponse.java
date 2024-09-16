@@ -1,4 +1,4 @@
-package dev.mirrex.dto.response;
+package dev.mirrex.dto.response.baseResponse;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
