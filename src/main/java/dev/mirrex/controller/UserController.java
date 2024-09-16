@@ -2,8 +2,9 @@ package dev.mirrex.controller;
 
 import dev.mirrex.dto.response.CustomSuccessResponse;
 import dev.mirrex.dto.response.PublicUserResponse;
-import dev.mirrex.service.UserServiceImpl;
-import jakarta.validation.constraints.NotNull;
+import dev.mirrex.service.UserService;
+import dev.mirrex.util.Constants;
+import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -20,7 +21,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserServiceImpl userService;
+    private final UserService userService;
 
     @GetMapping
     public ResponseEntity<CustomSuccessResponse<List<PublicUserResponse>>> getAllUsers() {
@@ -30,7 +31,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<CustomSuccessResponse<PublicUserResponse>> getUserInfoById(
-            @PathVariable @NotNull(message = "User ID cannot be null") UUID id) {
+            @PathVariable @Pattern(regexp = Constants.UUID_REGEX) UUID id) {
         return ResponseEntity.ok()
                 .body(userService.getUserInfoById(id));
     }
