@@ -1,4 +1,4 @@
-package dev.mirrex.service;
+package dev.mirrex.service.impl;
 
 import dev.mirrex.config.JwtTokenProvider;
 import dev.mirrex.dto.request.AuthRequest;
@@ -9,6 +9,7 @@ import dev.mirrex.exception.CustomException;
 import dev.mirrex.mapper.UserMapper;
 import dev.mirrex.model.User;
 import dev.mirrex.repository.UserRepository;
+import dev.mirrex.service.AuthService;
 import dev.mirrex.util.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
