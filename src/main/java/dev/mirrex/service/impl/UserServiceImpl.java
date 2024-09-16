@@ -1,5 +1,7 @@
 package dev.mirrex.service.impl;
 
+import dev.mirrex.dto.request.PutUserRequest;
+import dev.mirrex.dto.response.PutUserResponse;
 import dev.mirrex.dto.response.baseResponse.BaseSuccessResponse;
 import dev.mirrex.dto.response.baseResponse.CustomSuccessResponse;
 import dev.mirrex.dto.response.PublicUserResponse;
@@ -65,6 +67,30 @@ public class UserServiceImpl implements UserService {
 
         userRepository.delete(user);
         return new BaseSuccessResponse();
+    }
+
+    @Override
+    public CustomSuccessResponse<PutUserResponse> replaceUser(PutUserRequest userNewData) {
+        Authentication authentication = getAuthentication();
+
+        if (authentication == null || !authentication.isAuthenticated()) {
+            throw new CustomException(ErrorCode.UNAUTHORISED);
+        }
+
+        User user = userRepository.findByEmail(authentication.getName())
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+
+        if (!user.getEmail().equals(userNewData.getEmail()) &&
+                userRepository.existsByEmail(userNewData.getEmail())) {
+            throw new CustomException(ErrorCode.USER_WITH_THIS_EMAIL_ALREADY_EXIST);
+        }
+
+        userMapper.updateUser(userNewData, user);
+
+        User updatedUser = userRepository.save(user);
+        PutUserResponse replacedUser = userMapper.toReplacedUser(updatedUser);
+
+        return new CustomSuccessResponse<>(replacedUser);
     }
 
     private Authentication getAuthentication() {
