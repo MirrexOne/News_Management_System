@@ -1,5 +1,7 @@
 package dev.mirrex.service;
 
+import dev.mirrex.dto.request.PutUserRequest;
+import dev.mirrex.dto.response.PutUserResponse;
 import dev.mirrex.dto.response.baseResponse.BaseSuccessResponse;
 import dev.mirrex.dto.response.baseResponse.CustomSuccessResponse;
 import dev.mirrex.dto.response.PublicUserResponse;
@@ -15,4 +17,6 @@ public interface UserService {
     CustomSuccessResponse<PublicUserResponse> getUserInfo();
 
     BaseSuccessResponse deleteUser();
+
+    CustomSuccessResponse<PutUserResponse> replaceUser(PutUserRequest userNewData);
 }
