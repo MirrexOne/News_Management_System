@@ -1,13 +1,15 @@
 package dev.mirrex.service;
 
-import dev.mirrex.dto.request.AuthRequest;
-import dev.mirrex.dto.request.LoginUserRequest;
-import dev.mirrex.dto.request.RegisterUserRequest;
-import dev.mirrex.dto.response.CustomSuccessResponse;
+import dev.mirrex.dto.response.baseResponse.CustomSuccessResponse;
+import dev.mirrex.dto.response.PublicUserResponse;
+import java.util.List;
+import java.util.UUID;
 
 public interface UserService {
 
-    CustomSuccessResponse<LoginUserRequest> registerUser(RegisterUserRequest registerUserRequest);
+    CustomSuccessResponse<List<PublicUserResponse>> getAllUsers();
 
-    CustomSuccessResponse<LoginUserRequest> loginUser(AuthRequest authDto);
+    CustomSuccessResponse<PublicUserResponse> getUserInfoById(UUID id);
+
+    CustomSuccessResponse<PublicUserResponse> getUserInfo();
 }
