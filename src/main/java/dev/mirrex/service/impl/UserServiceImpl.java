@@ -44,30 +44,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public CustomSuccessResponse<PublicUserResponse> getUserInfo() {
-        Authentication authentication = getAuthentication();
-
-        User user = userRepository.findByEmail(authentication.getName())
-                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
-
-        return new CustomSuccessResponse<>(userMapper.toPublicUserResponse(user));
+        User currentAuthedUser = getCurrentUser();
+        return new CustomSuccessResponse<>(userMapper.toPublicUserResponse(currentAuthedUser));
     }
 
     @Override
     public BaseSuccessResponse deleteUser() {
-        Authentication authentication = getAuthentication();
-
-        if (authentication == null || !authentication.isAuthenticated()) {
-            throw new CustomException(ErrorCode.UNAUTHORISED);
-        }
-
-        User user = userRepository.findByEmail(authentication.getName())
-                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
-
-        userRepository.delete(user);
+        User currentAuthedUser = getCurrentUser();
+        userRepository.delete(currentAuthedUser);
         return new BaseSuccessResponse();
     }
 
-    private Authentication getAuthentication() {
-        return SecurityContextHolder.getContext().getAuthentication();
+    private User getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
     }
 }
