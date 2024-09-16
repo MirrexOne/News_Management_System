@@ -1,5 +1,6 @@
 package dev.mirrex.service.impl;
 
+import dev.mirrex.dto.response.baseResponse.BaseSuccessResponse;
 import dev.mirrex.dto.response.baseResponse.CustomSuccessResponse;
 import dev.mirrex.dto.response.PublicUserResponse;
 import dev.mirrex.exception.CustomException;
@@ -49,5 +50,16 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
         return new CustomSuccessResponse<>(userMapper.toPublicUserResponse(user));
+    }
+
+    @Override
+    public BaseSuccessResponse deleteUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        User user = userRepository.findByEmail(authentication.getName())
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+
+        userRepository.delete(user);
+        return new BaseSuccessResponse();
     }
 }

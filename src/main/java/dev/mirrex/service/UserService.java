@@ -1,5 +1,6 @@
 package dev.mirrex.service;
 
+import dev.mirrex.dto.response.baseResponse.BaseSuccessResponse;
 import dev.mirrex.dto.response.baseResponse.CustomSuccessResponse;
 import dev.mirrex.dto.response.PublicUserResponse;
 import java.util.List;
@@ -12,4 +13,6 @@ public interface UserService {
     CustomSuccessResponse<PublicUserResponse> getUserInfoById(UUID id);
 
     CustomSuccessResponse<PublicUserResponse> getUserInfo();
+
+    BaseSuccessResponse deleteUser();
 }
