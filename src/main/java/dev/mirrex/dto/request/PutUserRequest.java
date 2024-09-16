@@ -23,6 +23,6 @@ public class PutUserRequest {
     private String name;
 
     @NotBlank(message = ValidationConstants.USER_ROLE_NOT_NULL)
-    @Size(min = 3, max = 25)
+    @Size(min = 3, max = 25, message = ValidationConstants.ROLE_SIZE_NOT_VALID)
     private String role;
 }
