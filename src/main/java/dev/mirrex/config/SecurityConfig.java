@@ -1,6 +1,5 @@
 package dev.mirrex.config;
 
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,8 +14,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 
-import static dev.mirrex.util.Constants.UNAUTHORIZED;
-
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
@@ -24,6 +21,8 @@ public class SecurityConfig {
     private final UserDetailsService userDetailsService;
 
     private final JwtTokenProvider jwtTokenProvider;
+
+    private final CustomEntryPoint customEntryPoint;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -36,11 +35,8 @@ public class SecurityConfig {
                 )
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, userDetailsService),
                         UsernamePasswordAuthenticationFilter.class)
-                .exceptionHandling(exceptionHandling -> exceptionHandling
-                        .authenticationEntryPoint((request, response, authException) -> {
-                            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                            response.getWriter().write(UNAUTHORIZED);
-                        })
+                .exceptionHandling(exceptionHandling ->
+                        exceptionHandling.authenticationEntryPoint(customEntryPoint)
                 );
 
         return http.build();
