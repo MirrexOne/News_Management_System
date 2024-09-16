@@ -1,5 +1,7 @@
 package dev.mirrex.service.impl;
 
+import dev.mirrex.dto.request.PutUserRequest;
+import dev.mirrex.dto.response.PutUserResponse;
 import dev.mirrex.dto.response.baseResponse.BaseSuccessResponse;
 import dev.mirrex.dto.response.baseResponse.CustomSuccessResponse;
 import dev.mirrex.dto.response.PublicUserResponse;
@@ -13,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.UUID;
 
@@ -53,6 +56,24 @@ public class UserServiceImpl implements UserService {
         User currentAuthedUser = getCurrentUser();
         userRepository.delete(currentAuthedUser);
         return new BaseSuccessResponse();
+    }
+
+    @Override
+    @Transactional
+    public CustomSuccessResponse<PutUserResponse> replaceUser(PutUserRequest userNewData) {
+        User currentAuthedUser = getCurrentUser();
+
+        if (!currentAuthedUser.getEmail().equals(userNewData.getEmail()) &&
+                userRepository.existsByEmail(userNewData.getEmail())) {
+            throw new CustomException(ErrorCode.USER_WITH_THIS_EMAIL_ALREADY_EXIST);
+        }
+
+        userMapper.updateUser(userNewData, currentAuthedUser);
+
+        User updatedUser = userRepository.save(currentAuthedUser);
+        PutUserResponse replacedUser = userMapper.toReplacedUser(updatedUser);
+
+        return new CustomSuccessResponse<>(replacedUser);
     }
 
     private User getCurrentUser() {

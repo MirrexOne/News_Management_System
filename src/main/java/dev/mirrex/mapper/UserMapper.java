@@ -1,11 +1,14 @@
 package dev.mirrex.mapper;
 
+import dev.mirrex.dto.request.PutUserRequest;
 import dev.mirrex.dto.request.RegisterUserRequest;
 import dev.mirrex.dto.response.LoginUserResponse;
 import dev.mirrex.dto.response.PublicUserResponse;
+import dev.mirrex.dto.response.PutUserResponse;
 import dev.mirrex.model.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {
@@ -22,4 +25,10 @@ public interface UserMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "password", ignore = true)
     User toUser(PublicUserResponse publicUserView);
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "password", ignore = true)
+    void updateUser(PutUserRequest userNewData, @MappingTarget User user);
+
+    PutUserResponse toReplacedUser(User user);
 }
