@@ -1,6 +1,6 @@
 package dev.mirrex.service.impl;
 
-import dev.mirrex.dto.response.CustomSuccessResponse;
+import dev.mirrex.dto.response.baseResponse.CustomSuccessResponse;
 import dev.mirrex.dto.response.PublicUserResponse;
 import dev.mirrex.exception.CustomException;
 import dev.mirrex.mapper.UserMapper;
