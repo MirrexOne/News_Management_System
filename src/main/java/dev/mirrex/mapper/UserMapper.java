@@ -17,7 +17,7 @@ public interface UserMapper {
     @Mapping(target = "token", ignore = true)
     LoginUserRequest toLoginUserDto(User user);
 
-    PublicUserResponse toPublicUserView(User user);
+    PublicUserResponse toPublicUserResponse(User user);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "password", ignore = true)
