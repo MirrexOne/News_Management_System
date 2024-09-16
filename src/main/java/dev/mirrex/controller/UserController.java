@@ -20,24 +20,24 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserServiceImpl userServiceImpl;
+    private final UserServiceImpl userService;
 
     @GetMapping
     public ResponseEntity<CustomSuccessResponse<List<PublicUserResponse>>> getAllUsers() {
         return ResponseEntity.ok()
-                .body(userServiceImpl.getAllUsers());
+                .body(userService.getAllUsers());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<CustomSuccessResponse<PublicUserResponse>> getUserInfoById(
             @PathVariable @NotNull(message = "User ID cannot be null") UUID id) {
         return ResponseEntity.ok()
-                .body(userServiceImpl.getUserInfoById(id));
+                .body(userService.getUserInfoById(id));
     }
 
     @GetMapping("/info")
     public ResponseEntity<CustomSuccessResponse<PublicUserResponse>> getUserInfo() {
         return ResponseEntity.ok()
-                .body(userServiceImpl.getUserInfo());
+                .body(userService.getUserInfo());
     }
 }
