@@ -39,9 +39,11 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<CustomSuccessResponse<Void>> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
+    public ResponseEntity<CustomSuccessResponse<Void>> handleHttpMessageNotReadableException(
+            HttpMessageNotReadableException ex) {
         return ResponseEntity.badRequest()
-                .body(new CustomSuccessResponse<>(List.of(ErrorCode.HTTP_MESSAGE_NOT_READABLE_EXCEPTION.getCode()), true));
+                .body(new CustomSuccessResponse<>(
+                        List.of(ErrorCode.HTTP_MESSAGE_NOT_READABLE_EXCEPTION.getCode()), true));
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
