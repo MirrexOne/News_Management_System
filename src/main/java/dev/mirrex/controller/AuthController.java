@@ -1,8 +1,8 @@
 package dev.mirrex.controller;
 
 import dev.mirrex.dto.request.AuthRequest;
-import dev.mirrex.dto.response.CustomSuccessResponse;
-import dev.mirrex.dto.request.LoginUserRequest;
+import dev.mirrex.dto.response.baseResponse.CustomSuccessResponse;
+import dev.mirrex.dto.response.LoginUserResponse;
 import dev.mirrex.dto.request.RegisterUserRequest;
 import dev.mirrex.service.AuthService;
 import jakarta.validation.Valid;
@@ -21,14 +21,14 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/register")
-    public ResponseEntity<CustomSuccessResponse<LoginUserRequest>> registerUser(
+    public ResponseEntity<CustomSuccessResponse<LoginUserResponse>> registerUser(
             @Valid @RequestBody RegisterUserRequest registerUserRequest) {
         return ResponseEntity.ok()
                 .body(authService.registerUser(registerUserRequest));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<CustomSuccessResponse<LoginUserRequest>> loginUser(
+    public ResponseEntity<CustomSuccessResponse<LoginUserResponse>> loginUser(
             @Valid @RequestBody AuthRequest authRequest) {
         return ResponseEntity.ok()
                 .body(authService.loginUser(authRequest));
