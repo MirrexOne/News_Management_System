@@ -1,5 +1,7 @@
 package dev.mirrex.controller;
 
+import dev.mirrex.dto.request.PutUserRequest;
+import dev.mirrex.dto.response.PutUserResponse;
 import dev.mirrex.dto.response.baseResponse.BaseSuccessResponse;
 import dev.mirrex.dto.response.baseResponse.CustomSuccessResponse;
 import dev.mirrex.dto.response.PublicUserResponse;
@@ -13,6 +15,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
@@ -50,5 +54,12 @@ public class UserController {
     public ResponseEntity<BaseSuccessResponse> deleteUser() {
         return ResponseEntity.ok()
                 .body(userService.deleteUser());
+    }
+
+    @PutMapping
+    public ResponseEntity<CustomSuccessResponse<PutUserResponse>> replaceUser(
+            @RequestBody PutUserRequest userNewData) {
+        return ResponseEntity.ok()
+                .body(userService.replaceUser(userNewData));
     }
 }
