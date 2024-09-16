@@ -2,12 +2,13 @@ package dev.mirrex.dto.request;
 
 import lombok.Getter;
 import lombok.Setter;
+import java.util.UUID;
 
 @Getter
 @Setter
 public class LoginUserRequest {
 
-    private Long id;
+    private UUID id;
 
     private String name;
 
