@@ -56,6 +56,10 @@ public class UserServiceImpl implements UserService {
     public BaseSuccessResponse deleteUser() {
         Authentication authentication = getAuthentication();
 
+        if (authentication == null || !authentication.isAuthenticated()) {
+            throw new CustomException(ErrorCode.UNAUTHORISED);
+        }
+
         User user = userRepository.findByEmail(authentication.getName())
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
