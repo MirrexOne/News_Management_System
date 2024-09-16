@@ -1,5 +1,6 @@
 package dev.mirrex.service.impl;
 
+import dev.mirrex.dto.response.baseResponse.BaseSuccessResponse;
 import dev.mirrex.dto.response.baseResponse.CustomSuccessResponse;
 import dev.mirrex.dto.response.PublicUserResponse;
 import dev.mirrex.exception.CustomException;
@@ -43,11 +44,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public CustomSuccessResponse<PublicUserResponse> getUserInfo() {
+        User currentAuthedUser = getCurrentUser();
+        return new CustomSuccessResponse<>(userMapper.toPublicUserResponse(currentAuthedUser));
+    }
+
+    @Override
+    public BaseSuccessResponse deleteUser() {
+        User currentAuthedUser = getCurrentUser();
+        userRepository.delete(currentAuthedUser);
+        return new BaseSuccessResponse();
+    }
+
+    private User getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        User user = userRepository.findByEmail(authentication.getName())
+        String email = authentication.getName();
+        return userRepository.findByEmail(email)
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
-
-        return new CustomSuccessResponse<>(userMapper.toPublicUserResponse(user));
     }
 }
