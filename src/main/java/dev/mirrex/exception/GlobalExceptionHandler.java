@@ -1,6 +1,6 @@
 package dev.mirrex.exception;
 
-import dev.mirrex.dto.response.CustomSuccessResponse;
+import dev.mirrex.dto.response.baseResponse.CustomSuccessResponse;
 import dev.mirrex.util.ErrorCode;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.ResponseEntity;

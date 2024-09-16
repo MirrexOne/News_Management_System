@@ -1,12 +1,12 @@
-package dev.mirrex.service;
+package dev.mirrex.service.impl;
 
-import dev.mirrex.dto.response.BaseSuccessResponse;
-import dev.mirrex.dto.response.CustomSuccessResponse;
+import dev.mirrex.dto.response.baseResponse.CustomSuccessResponse;
 import dev.mirrex.dto.response.PublicUserResponse;
 import dev.mirrex.exception.CustomException;
 import dev.mirrex.mapper.UserMapper;
 import dev.mirrex.model.User;
 import dev.mirrex.repository.UserRepository;
+import dev.mirrex.service.UserService;
 import dev.mirrex.util.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService {
     public CustomSuccessResponse<List<PublicUserResponse>> getAllUsers() {
         List<PublicUserResponse> users = userRepository.findAll()
                 .stream()
-                .map(userMapper::toPublicUserView)
+                .map(userMapper::toPublicUserResponse)
                 .toList();
         return new CustomSuccessResponse<>(users);
     }
@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
-        PublicUserResponse publicUserView = userMapper.toPublicUserView(user);
+        PublicUserResponse publicUserView = userMapper.toPublicUserResponse(user);
         return new CustomSuccessResponse<>(publicUserView);
     }
 
@@ -48,17 +48,6 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByEmail(authentication.getName())
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
-        return new CustomSuccessResponse<>(userMapper.toPublicUserView(user));
-    }
-
-    @Override
-    public BaseSuccessResponse deleteUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        User user = userRepository.findByEmail(authentication.getName())
-                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
-
-        userRepository.delete(user);
-        return new BaseSuccessResponse();
+        return new CustomSuccessResponse<>(userMapper.toPublicUserResponse(user));
     }
 }
