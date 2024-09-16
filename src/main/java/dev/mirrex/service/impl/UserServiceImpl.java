@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public CustomSuccessResponse<PublicUserResponse> getUserInfo() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Authentication authentication = getAuthentication();
 
         User user = userRepository.findByEmail(authentication.getName())
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
@@ -54,12 +54,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public BaseSuccessResponse deleteUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Authentication authentication = getAuthentication();
 
         User user = userRepository.findByEmail(authentication.getName())
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
         userRepository.delete(user);
         return new BaseSuccessResponse();
+    }
+
+    private Authentication getAuthentication() {
+        return SecurityContextHolder.getContext().getAuthentication();
     }
 }
