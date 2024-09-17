@@ -1,10 +1,10 @@
-package dev.mirrex.controller;
+package dev.mirrex.controllers;
 
 import dev.mirrex.dto.request.AuthRequest;
 import dev.mirrex.dto.response.baseResponse.CustomSuccessResponse;
 import dev.mirrex.dto.response.LoginUserResponse;
 import dev.mirrex.dto.request.RegisterUserRequest;
-import dev.mirrex.service.AuthService;
+import dev.mirrex.services.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

@@ -1,15 +1,15 @@
-package dev.mirrex.service.impl;
+package dev.mirrex.services.impl;
 
 import dev.mirrex.dto.request.PutUserRequest;
 import dev.mirrex.dto.response.PutUserResponse;
 import dev.mirrex.dto.response.baseResponse.BaseSuccessResponse;
 import dev.mirrex.dto.response.baseResponse.CustomSuccessResponse;
 import dev.mirrex.dto.response.PublicUserResponse;
-import dev.mirrex.exception.CustomException;
-import dev.mirrex.mapper.UserMapper;
-import dev.mirrex.model.User;
-import dev.mirrex.repository.UserRepository;
-import dev.mirrex.service.UserService;
+import dev.mirrex.exceptionHandlers.CustomException;
+import dev.mirrex.mappers.UserMapper;
+import dev.mirrex.entities.User;
+import dev.mirrex.repositories.UserRepository;
+import dev.mirrex.services.UserService;
 import dev.mirrex.util.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -76,7 +76,8 @@ public class UserServiceImpl implements UserService {
         return new CustomSuccessResponse<>(replacedUser);
     }
 
-    private User getCurrentUser() {
+    @Override
+    public User getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
         return userRepository.findByEmail(email)

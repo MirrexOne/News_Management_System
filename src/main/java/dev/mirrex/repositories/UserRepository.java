@@ -1,6 +1,6 @@
-package dev.mirrex.repository;
+package dev.mirrex.repositories;
 
-import dev.mirrex.model.User;
+import dev.mirrex.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 import java.util.UUID;
