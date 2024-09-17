@@ -9,7 +9,7 @@ public class CreateNewsSuccessResponse {
 
     private Long id;
 
-    private Integer statusCode;
+    private Integer statusCode = 1;
 
-    private Boolean success;
+    private Boolean success = true;
 }
