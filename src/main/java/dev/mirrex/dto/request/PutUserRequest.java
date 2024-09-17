@@ -11,10 +11,11 @@ import lombok.Setter;
 @Setter
 public class PutUserRequest {
 
+    @NotBlank(message = ValidationConstants.USER_AVATAR_NOT_NULL)
     private String avatar;
 
+    @NotBlank(message = ValidationConstants.USER_EMAIL_NOT_NULL)
     @Email(message = ValidationConstants.USER_EMAIL_NOT_VALID)
-    @NotBlank(message = ValidationConstants.USER_EMAIL_NOT_VALID)
     @Size(min = 3, max = 100, message = ValidationConstants.EMAIL_SIZE_NOT_VALID)
     private String email;
 
