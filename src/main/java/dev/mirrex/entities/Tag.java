@@ -9,7 +9,6 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -26,5 +25,5 @@ public class Tag {
     private String title;
 
     @ManyToMany(mappedBy = "tags")
-    private Set<News> news = new HashSet<>();
+    private Set<News> news;
 }

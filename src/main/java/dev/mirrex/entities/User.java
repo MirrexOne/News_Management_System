@@ -45,5 +45,5 @@ public class User {
     private String role;
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<News> news = new ArrayList<>();
+    private List<News> news;
 }
