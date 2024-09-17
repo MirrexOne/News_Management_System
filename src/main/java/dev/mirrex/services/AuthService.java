@@ -1,4 +1,4 @@
-package dev.mirrex.service;
+package dev.mirrex.services;
 
 import dev.mirrex.dto.request.AuthRequest;
 import dev.mirrex.dto.response.LoginUserResponse;

@@ -1,4 +1,4 @@
-package dev.mirrex.model;
+package dev.mirrex.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

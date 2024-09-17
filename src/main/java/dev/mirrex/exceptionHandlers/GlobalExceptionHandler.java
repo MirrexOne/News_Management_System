@@ -1,4 +1,4 @@
-package dev.mirrex.exception;
+package dev.mirrex.exceptionHandlers;
 
 import dev.mirrex.dto.response.baseResponse.CustomSuccessResponse;
 import dev.mirrex.util.ErrorCode;

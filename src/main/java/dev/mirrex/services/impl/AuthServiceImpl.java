@@ -1,15 +1,15 @@
-package dev.mirrex.service.impl;
+package dev.mirrex.services.impl;
 
-import dev.mirrex.config.JwtTokenProvider;
+import dev.mirrex.configurations.JwtTokenProvider;
 import dev.mirrex.dto.request.AuthRequest;
 import dev.mirrex.dto.response.LoginUserResponse;
 import dev.mirrex.dto.request.RegisterUserRequest;
 import dev.mirrex.dto.response.baseResponse.CustomSuccessResponse;
-import dev.mirrex.exception.CustomException;
-import dev.mirrex.mapper.UserMapper;
-import dev.mirrex.model.User;
-import dev.mirrex.repository.UserRepository;
-import dev.mirrex.service.AuthService;
+import dev.mirrex.exceptionHandlers.CustomException;
+import dev.mirrex.mappers.UserMapper;
+import dev.mirrex.entities.User;
+import dev.mirrex.repositories.UserRepository;
+import dev.mirrex.services.AuthService;
 import dev.mirrex.util.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
