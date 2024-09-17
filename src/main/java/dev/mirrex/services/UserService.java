@@ -5,6 +5,8 @@ import dev.mirrex.dto.response.PutUserResponse;
 import dev.mirrex.dto.response.baseResponse.BaseSuccessResponse;
 import dev.mirrex.dto.response.baseResponse.CustomSuccessResponse;
 import dev.mirrex.dto.response.PublicUserResponse;
+import dev.mirrex.entities.User;
+import org.springframework.security.core.Authentication;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,4 +21,6 @@ public interface UserService {
     BaseSuccessResponse deleteUser();
 
     CustomSuccessResponse<PutUserResponse> replaceUser(PutUserRequest userNewData);
+
+    User getCurrentUser(Authentication authentication);
 }
