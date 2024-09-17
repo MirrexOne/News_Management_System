@@ -16,7 +16,6 @@ import dev.mirrex.util.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.Set;
 
 @Service
@@ -62,6 +61,7 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
+    @Transactional
     public BaseSuccessResponse updateNewsById(Long id, NewsCreateRequest newsUpdate) {
         User currentUser = userService.getCurrentUser();
         News news = newsRepository.findById(id)
