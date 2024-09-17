@@ -31,7 +31,7 @@ public class NewsServiceImpl implements NewsService {
     @Override
     @Transactional
     public CreateNewsSuccessResponse createNews(NewsCreateRequest newsDto) {
-        User currentUser = userService.getCurrentUser(SecurityContextHolder.getContext().getAuthentication());
+        User currentUser = userService.getCurrentUser();
 
         News news = newsMapper.toNews(newsDto);
         news.setAuthor(currentUser);
