@@ -26,14 +26,12 @@ public class NewsController {
     @PostMapping
     public ResponseEntity<CreateNewsSuccessResponse> createNews(
             @Valid @RequestBody NewsCreateRequest newsDto) {
-        CreateNewsSuccessResponse response = newsService.createNews(newsDto);
-        return ResponseEntity.ok().body(response);
+        return ResponseEntity.ok().body(newsService.createNews(newsDto));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<BaseSuccessResponse> deleteNewsById(
             @PathVariable @Min(value = 1, message = ValidationConstants.ID_MUST_BE_POSITIVE) Long id) {
-        BaseSuccessResponse response = newsService.deleteNewsById(id);
-        return ResponseEntity.ok().body(response);
+        return ResponseEntity.ok().body(newsService.deleteNewsById(id));
     }
 }
