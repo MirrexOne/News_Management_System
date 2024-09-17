@@ -8,6 +8,7 @@ import dev.mirrex.dto.response.PublicUserResponse;
 import dev.mirrex.service.UserService;
 import dev.mirrex.util.Constants;
 import dev.mirrex.util.ValidationConstants;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -58,7 +59,7 @@ public class UserController {
 
     @PutMapping
     public ResponseEntity<CustomSuccessResponse<PutUserResponse>> replaceUser(
-            @RequestBody PutUserRequest userNewData) {
+            @RequestBody @Valid PutUserRequest userNewData) {
         return ResponseEntity.ok()
                 .body(userService.replaceUser(userNewData));
     }
