@@ -1,4 +1,4 @@
-package dev.mirrex.exception;
+package dev.mirrex.exceptionHandlers;
 
 import dev.mirrex.util.ErrorCode;
 import lombok.Getter;

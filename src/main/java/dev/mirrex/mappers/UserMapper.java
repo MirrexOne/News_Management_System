@@ -1,11 +1,11 @@
-package dev.mirrex.mapper;
+package dev.mirrex.mappers;
 
 import dev.mirrex.dto.request.PutUserRequest;
 import dev.mirrex.dto.request.RegisterUserRequest;
 import dev.mirrex.dto.response.LoginUserResponse;
 import dev.mirrex.dto.response.PublicUserResponse;
 import dev.mirrex.dto.response.PutUserResponse;
-import dev.mirrex.model.User;
+import dev.mirrex.entities.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
