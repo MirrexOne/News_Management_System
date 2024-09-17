@@ -14,29 +14,27 @@ import lombok.Getter;
 import lombok.Setter;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 
 @Entity
 @Table(name = "news")
 @Getter
 @Setter
-public class New {
+public class News {
 
     @Id
     @GeneratedValue
-    @Column(columnDefinition = "UUID")
-    private UUID id;
+    private Long id;
 
     @Size(min = 3, max = 160)
     @Column(nullable = false)
     private String title;
 
     @Size(min = 3, max = 160)
-    @Column(nullable = false, length = 160)
+    @Column(nullable = false)
     private String description;
 
     @Size(min = 3, max = 130)
-    @Column(nullable = false, length = 130)
+    @Column(nullable = false)
     private String image;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
