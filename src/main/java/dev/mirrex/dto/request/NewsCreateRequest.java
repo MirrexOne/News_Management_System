@@ -2,6 +2,7 @@ package dev.mirrex.dto.request;
 
 import dev.mirrex.util.ValidationConstants;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,5 +24,6 @@ public class NewsCreateRequest {
     @NotBlank(message = ValidationConstants.NEWS_IMAGE_HAS_TO_BE_PRESENT)
     private String image;
 
-    private List<String> tags;
+    @NotEmpty(message = ValidationConstants.TAGS_NOT_VALID)
+    private List<@NotBlank(message = ValidationConstants.TAGS_NOT_VALID) String> tags;
 }
