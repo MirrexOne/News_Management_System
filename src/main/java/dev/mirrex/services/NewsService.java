@@ -9,4 +9,6 @@ public interface NewsService {
     CreateNewsSuccessResponse createNews(NewsCreateRequest newsCreateRequest);
 
     BaseSuccessResponse deleteNewsById(Long id);
+
+    BaseSuccessResponse updateNewsById(Long id, NewsCreateRequest newsUpdate);
 }
