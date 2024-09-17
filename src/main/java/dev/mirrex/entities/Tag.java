@@ -10,7 +10,6 @@ import lombok.Getter;
 import lombok.Setter;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 
 @Entity
 @Table(name = "tags")
@@ -20,12 +19,11 @@ public class Tag {
 
     @Id
     @GeneratedValue
-    @Column(columnDefinition = "UUID")
-    private UUID id;
+    private Long id;
 
     @Column(nullable = false, unique = true)
-    private String name;
+    private String title;
 
     @ManyToMany(mappedBy = "tags")
-    private Set<New> aNews = new HashSet<>();
+    private Set<News> news = new HashSet<>();
 }
