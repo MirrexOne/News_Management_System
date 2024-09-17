@@ -53,7 +53,7 @@ public class NewsServiceImpl implements NewsService {
                 .orElseThrow(() -> new CustomException(ErrorCode.NEWS_NOT_FOUND));
 
         if (!news.getAuthor().getId().equals(currentUser.getId())) {
-            throw new CustomException(ErrorCode.UNAUTHORISED);
+            throw new CustomException(ErrorCode.NEWS_ACCESS_DENIED);
         }
 
         newsRepository.delete(news);
