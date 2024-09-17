@@ -27,6 +27,16 @@ public class GlobalExceptionHandler {
                 .body(new CustomSuccessResponse<>(codes, true));
     }
 
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<CustomSuccessResponse<Void>> handleConstraintViolation(ConstraintViolationException ex) {
+        List<ErrorCode> errorCodes = ex.getConstraintViolations().stream()
+                .map(violation -> ErrorCode.fromMessage(violation.getMessage()))
+                .toList();
+        List<Integer> codes = errorCodes.stream().map(ErrorCode::getCode).collect(Collectors.toList());
+        return ResponseEntity.badRequest()
+                .body(new CustomSuccessResponse<>(codes, true));
+    }
+
     @ExceptionHandler(AuthenticationException.class)
     public ResponseEntity<CustomSuccessResponse<Void>> handleAuthenticationException(AuthenticationException ex) {
         List<Integer> codes = List.of(ErrorCode.UNAUTHORISED.getCode());
@@ -53,15 +63,5 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest()
                 .body(new CustomSuccessResponse<>(
                         List.of(ErrorCode.HTTP_MESSAGE_NOT_READABLE_EXCEPTION.getCode()), true));
-    }
-
-    @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<CustomSuccessResponse<Void>> handleConstraintViolation(ConstraintViolationException ex) {
-        List<ErrorCode> errorCodes = ex.getConstraintViolations().stream()
-                .map(violation -> ErrorCode.fromMessage(violation.getMessage()))
-                .toList();
-        List<Integer> codes = errorCodes.stream().map(ErrorCode::getCode).collect(Collectors.toList());
-        return ResponseEntity.badRequest()
-                .body(new CustomSuccessResponse<>(codes, true));
     }
 }
