@@ -1,11 +1,11 @@
-package dev.mirrex.controller;
+package dev.mirrex.controllers;
 
 import dev.mirrex.dto.request.PutUserRequest;
 import dev.mirrex.dto.response.PutUserResponse;
 import dev.mirrex.dto.response.baseResponse.BaseSuccessResponse;
 import dev.mirrex.dto.response.baseResponse.CustomSuccessResponse;
 import dev.mirrex.dto.response.PublicUserResponse;
-import dev.mirrex.service.UserService;
+import dev.mirrex.services.UserService;
 import dev.mirrex.util.Constants;
 import dev.mirrex.util.ValidationConstants;
 import jakarta.validation.Valid;

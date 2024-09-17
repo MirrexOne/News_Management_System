@@ -1,4 +1,4 @@
-package dev.mirrex.config;
+package dev.mirrex.configurations;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
