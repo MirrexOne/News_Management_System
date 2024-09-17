@@ -13,7 +13,5 @@ public interface NewsMapper {
     @Mapping(target = "tags", ignore = true)
     News toEntity(NewsCreateRequest dto);
 
-    @Mapping(target = "statusCode", constant = "201")
-    @Mapping(target = "success", constant = "true")
     CreateNewsSuccessResponse toDto(News entity);
 }
