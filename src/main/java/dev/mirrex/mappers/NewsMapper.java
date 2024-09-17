@@ -11,7 +11,8 @@ public interface NewsMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "tags", ignore = true)
-    News toEntity(NewsCreateRequest dto);
+    @Mapping(target = "author", ignore = true)
+    News toNews(NewsCreateRequest dto);
 
-    CreateNewsSuccessResponse toDto(News entity);
+    CreateNewsSuccessResponse toCreateNewsResponse(News entity);
 }
