@@ -5,8 +5,8 @@ import dev.mirrex.dto.response.PutUserResponse;
 import dev.mirrex.dto.response.baseResponse.BaseSuccessResponse;
 import dev.mirrex.dto.response.baseResponse.CustomSuccessResponse;
 import dev.mirrex.dto.response.PublicUserResponse;
+import dev.mirrex.entities.News;
 import dev.mirrex.entities.User;
-import org.springframework.security.core.Authentication;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,4 +23,6 @@ public interface UserService {
     CustomSuccessResponse<PutUserResponse> replaceUser(PutUserRequest userNewData);
 
     User getCurrentUser();
+
+    Boolean hasAccessToResource(News news, User currentUser);
 }
