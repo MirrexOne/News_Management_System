@@ -2,7 +2,10 @@ package dev.mirrex.services.impl;
 
 import dev.mirrex.dto.request.NewsCreateRequest;
 import dev.mirrex.dto.response.CreateNewsSuccessResponse;
+import dev.mirrex.dto.response.GetNewsOutResponse;
+import dev.mirrex.dto.response.PageableResponse;
 import dev.mirrex.dto.response.baseResponse.BaseSuccessResponse;
+import dev.mirrex.dto.response.baseResponse.CustomSuccessResponse;
 import dev.mirrex.entities.News;
 import dev.mirrex.entities.Tag;
 import dev.mirrex.entities.User;
@@ -14,9 +17,16 @@ import dev.mirrex.services.TagService;
 import dev.mirrex.services.UserService;
 import dev.mirrex.util.ErrorCode;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -79,5 +89,22 @@ public class NewsServiceImpl implements NewsService {
         newsRepository.save(news);
 
         return new BaseSuccessResponse();
+    }
+
+    @Override
+    public CustomSuccessResponse<PageableResponse<List<GetNewsOutResponse>>> getNews(Integer page, Integer perPage) {
+        Pageable pageable = PageRequest.of(page - 1, perPage, Sort.by("id").descending());
+        Page<News> newsPage = newsRepository.findAll(pageable);
+
+        List<GetNewsOutResponse> newsDtoList = newsPage.getContent().stream()
+                .map(newsMapper::toGetNewsOutResponse)
+                .collect(Collectors.toList());
+
+        PageableResponse<List<GetNewsOutResponse>> pageableResponse = new PageableResponse<>(
+                newsDtoList,
+                newsPage.getTotalElements()
+        );
+
+        return new CustomSuccessResponse<>(pageableResponse);
     }
 }
