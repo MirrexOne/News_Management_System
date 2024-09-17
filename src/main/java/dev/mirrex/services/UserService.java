@@ -22,5 +22,5 @@ public interface UserService {
 
     CustomSuccessResponse<PutUserResponse> replaceUser(PutUserRequest userNewData);
 
-    User getCurrentUser(Authentication authentication);
+    User getCurrentUser();
 }
