@@ -2,16 +2,18 @@ package dev.mirrex.services.impl;
 
 import dev.mirrex.dto.request.NewsCreateRequest;
 import dev.mirrex.dto.response.CreateNewsSuccessResponse;
+import dev.mirrex.dto.response.baseResponse.BaseSuccessResponse;
 import dev.mirrex.entities.News;
 import dev.mirrex.entities.Tag;
 import dev.mirrex.entities.User;
+import dev.mirrex.exceptionHandlers.CustomException;
 import dev.mirrex.mappers.NewsMapper;
 import dev.mirrex.repositories.NewsRepository;
 import dev.mirrex.services.NewsService;
 import dev.mirrex.services.TagService;
 import dev.mirrex.services.UserService;
+import dev.mirrex.util.ErrorCode;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.Set;
@@ -41,5 +43,20 @@ public class NewsServiceImpl implements NewsService {
 
         News savedNews = newsRepository.save(news);
         return newsMapper.toCreateNewsResponse(savedNews);
+    }
+
+    @Override
+    @Transactional
+    public BaseSuccessResponse deleteNewsById(Long id) {
+        User currentUser = userService.getCurrentUser();
+        News news = newsRepository.findById(id)
+                .orElseThrow(() -> new CustomException(ErrorCode.NEWS_NOT_FOUND));
+
+        if (!news.getAuthor().getId().equals(currentUser.getId())) {
+            throw new CustomException(ErrorCode.NEWS_ACCESS_DENIED);
+        }
+
+        newsRepository.delete(news);
+        return new BaseSuccessResponse();
     }
 }
