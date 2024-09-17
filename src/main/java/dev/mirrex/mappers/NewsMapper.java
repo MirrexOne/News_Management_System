@@ -5,6 +5,7 @@ import dev.mirrex.dto.response.CreateNewsSuccessResponse;
 import dev.mirrex.entities.News;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
 public interface NewsMapper {
@@ -15,4 +16,9 @@ public interface NewsMapper {
     News toNews(NewsCreateRequest dto);
 
     CreateNewsSuccessResponse toCreateNewsResponse(News entity);
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "author", ignore = true)
+    @Mapping(target = "tags", ignore = true)
+    void updateNews(NewsCreateRequest newsCreateRequest, @MappingTarget News news);
 }

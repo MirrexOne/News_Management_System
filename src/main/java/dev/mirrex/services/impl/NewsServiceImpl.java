@@ -16,6 +16,7 @@ import dev.mirrex.util.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.Set;
 
 @Service
@@ -52,11 +53,31 @@ public class NewsServiceImpl implements NewsService {
         News news = newsRepository.findById(id)
                 .orElseThrow(() -> new CustomException(ErrorCode.NEWS_NOT_FOUND));
 
-        if (!news.getAuthor().getId().equals(currentUser.getId())) {
+        if (!userService.hasAccessToResource(news, currentUser)) {
             throw new CustomException(ErrorCode.NEWS_ACCESS_DENIED);
         }
 
         newsRepository.delete(news);
+        return new BaseSuccessResponse();
+    }
+
+    @Override
+    public BaseSuccessResponse updateNewsById(Long id, NewsCreateRequest newsUpdate) {
+        User currentUser = userService.getCurrentUser();
+        News news = newsRepository.findById(id)
+                .orElseThrow(() -> new CustomException(ErrorCode.NEWS_NOT_FOUND));
+
+        if (!userService.hasAccessToResource(news, currentUser)) {
+            throw new CustomException(ErrorCode.NEWS_ACCESS_DENIED);
+        }
+
+        newsMapper.updateNews(newsUpdate, news);
+
+        Set<Tag> tags = tagService.getOrCreateTags(newsUpdate.getTags());
+        news.setTags(tags);
+
+        newsRepository.save(news);
+
         return new BaseSuccessResponse();
     }
 }
