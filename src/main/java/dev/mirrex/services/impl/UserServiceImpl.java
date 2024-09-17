@@ -5,6 +5,7 @@ import dev.mirrex.dto.response.PutUserResponse;
 import dev.mirrex.dto.response.baseResponse.BaseSuccessResponse;
 import dev.mirrex.dto.response.baseResponse.CustomSuccessResponse;
 import dev.mirrex.dto.response.PublicUserResponse;
+import dev.mirrex.entities.News;
 import dev.mirrex.exceptionHandlers.CustomException;
 import dev.mirrex.mappers.UserMapper;
 import dev.mirrex.entities.User;
@@ -82,5 +83,10 @@ public class UserServiceImpl implements UserService {
         String email = authentication.getName();
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+    }
+
+    @Override
+    public Boolean hasAccessToResource(News news, User currentUser) {
+        return news.getAuthor().getId().equals(currentUser.getId());
     }
 }
