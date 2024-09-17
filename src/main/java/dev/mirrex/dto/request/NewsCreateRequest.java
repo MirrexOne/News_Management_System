@@ -1,8 +1,10 @@
 package dev.mirrex.dto.request;
 
+import dev.mirrex.util.Constants;
 import dev.mirrex.util.ValidationConstants;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,6 +24,7 @@ public class NewsCreateRequest {
 
     @Size(min = 3, max = 130, message = ValidationConstants.NEWS_IMAGE_LENGTH)
     @NotBlank(message = ValidationConstants.NEWS_IMAGE_HAS_TO_BE_PRESENT)
+    @Pattern(regexp = Constants.PATH_PATTERN, message = ValidationConstants.NEWS_IMAGE_HAS_TO_BE_PRESENT)
     private String image;
 
     @NotEmpty(message = ValidationConstants.TAGS_NOT_VALID)
