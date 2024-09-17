@@ -1,4 +1,4 @@
-package dev.mirrex.exception;
+package dev.mirrex.exceptionHandlers;
 
 import dev.mirrex.dto.response.baseResponse.CustomSuccessResponse;
 import dev.mirrex.util.ErrorCode;
@@ -10,9 +10,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-
-import java.util.List;
 import java.util.stream.Collectors;
+import java.util.List;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {

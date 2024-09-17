@@ -1,4 +1,4 @@
-package dev.mirrex.exception;
+package dev.mirrex.exceptionHandlers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.mirrex.dto.response.baseResponse.CustomSuccessResponse;
