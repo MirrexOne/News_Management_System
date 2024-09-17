@@ -1,6 +1,6 @@
-package dev.mirrex.config;
+package dev.mirrex.configurations;
 
-import dev.mirrex.exception.CustomEntryPoint;
+import dev.mirrex.exceptionHandlers.CustomEntryPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

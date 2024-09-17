@@ -1,8 +1,8 @@
-package dev.mirrex.service;
+package dev.mirrex.services;
 
-import dev.mirrex.exception.CustomException;
-import dev.mirrex.model.User;
-import dev.mirrex.repository.UserRepository;
+import dev.mirrex.exceptionHandlers.CustomException;
+import dev.mirrex.entities.User;
+import dev.mirrex.repositories.UserRepository;
 import dev.mirrex.util.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
