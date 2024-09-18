@@ -56,7 +56,8 @@ public enum ErrorCode {
     USER_WITH_THIS_EMAIL_ALREADY_EXIST(46, ValidationConstants.USER_WITH_THIS_EMAIL_ALREADY_EXIST),
     HTTP_MESSAGE_NOT_READABLE_EXCEPTION(47, ValidationConstants.HTTP_MESSAGE_NOT_READABLE_EXCEPTION),
     USER_NOT_AUTHENTICATED(48, ValidationConstants.USER_NOT_AUTHENTICATED),
-    NEWS_ACCESS_DENIED(49, "Access to the news item is denied");
+    NEWS_ACCESS_DENIED(49, "Access to the news item is denied"),
+    FILE_UPLOAD_ERROR(50, "Error occurred while uploading file");
 
     private final Integer code;
 
