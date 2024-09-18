@@ -73,4 +73,15 @@ public class NewsController {
         UUID userUUID = UUID.fromString(userId);
         return ResponseEntity.ok(newsService.getUserNews(userUUID, page, perPage));
     }
+
+    @GetMapping("/find")
+    public ResponseEntity<CustomSuccessResponse<PageableResponse<List<GetNewsOutResponse>>>> findNews(
+            @RequestParam(required = false) String author,
+            @RequestParam(required = false) String keywords,
+            @RequestParam @Min(value = 1, message = ValidationConstants.TASKS_PAGE_GREATER_OR_EQUAL_1) Integer page,
+            @RequestParam @Min(value = 1, message = ValidationConstants.TASKS_PER_PAGE_GREATER_OR_EQUAL_1)
+            @Max(value = 100, message = ValidationConstants.TASKS_PER_PAGE_LESS_OR_EQUAL_100) Integer perPage,
+            @RequestParam(required = false) List<String> tags) {
+        return ResponseEntity.ok(newsService.findNews(author, keywords, page, perPage, tags));
+    }
 }
