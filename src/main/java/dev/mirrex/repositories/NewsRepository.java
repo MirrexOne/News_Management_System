@@ -14,7 +14,8 @@ public interface NewsRepository extends JpaRepository<News, Long> {
 
     @Query("SELECT DISTINCT n FROM News n LEFT JOIN n.tags t WHERE " +
             "(:author IS NULL OR n.author.name = :author) AND " +
-            "(:keywords IS NULL OR CAST(n.title AS string) ILIKE CONCAT('%', :keywords, '%') OR CAST(n.description AS string) ILIKE CONCAT('%', :keywords, '%')) AND " +
+            "(:keywords IS NULL OR CAST(n.title AS string) ILIKE CONCAT('%', :keywords, '%') " +
+            "OR CAST(n.description AS string) ILIKE CONCAT('%', :keywords, '%')) AND " +
             "(:tags IS NULL OR t.title IN :tags)")
     Page<News> findNewsByFilters(String author, String keywords, List<String> tags, Pageable pageable);
 }
