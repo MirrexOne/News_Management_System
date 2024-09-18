@@ -7,6 +7,7 @@ import dev.mirrex.dto.response.PageableResponse;
 import dev.mirrex.dto.response.baseResponse.BaseSuccessResponse;
 import dev.mirrex.dto.response.baseResponse.CustomSuccessResponse;
 import java.util.List;
+import java.util.UUID;
 
 public interface NewsService {
 
@@ -17,4 +18,6 @@ public interface NewsService {
     BaseSuccessResponse updateNewsById(Long id, NewsCreateRequest newsUpdate);
 
     CustomSuccessResponse<PageableResponse<List<GetNewsOutResponse>>> getNews(Integer page, Integer perPage);
+
+    CustomSuccessResponse<PageableResponse<List<GetNewsOutResponse>>> getUserNews(UUID userId, Integer page, Integer perPage);
 }
