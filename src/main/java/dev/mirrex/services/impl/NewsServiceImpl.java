@@ -17,6 +17,7 @@ import dev.mirrex.services.NewsService;
 import dev.mirrex.services.TagService;
 import dev.mirrex.services.UserService;
 import dev.mirrex.util.ErrorCode;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -99,16 +100,7 @@ public class NewsServiceImpl implements NewsService {
         Pageable pageable = PageRequest.of(page - 1, perPage, Sort.by("id").descending());
         Page<News> newsPage = newsRepository.findAll(pageable);
 
-        List<GetNewsOutResponse> newsDtoList = newsPage.getContent().stream()
-                .map(newsMapper::toGetNewsOutResponse)
-                .collect(Collectors.toList());
-
-        PageableResponse<List<GetNewsOutResponse>> pageableResponse = new PageableResponse<>(
-                newsDtoList,
-                newsPage.getTotalElements()
-        );
-
-        return new CustomSuccessResponse<>(pageableResponse);
+        return getPageableResponse(newsPage);
     }
 
     @Override
@@ -119,6 +111,11 @@ public class NewsServiceImpl implements NewsService {
         Pageable pageable = PageRequest.of(page - 1, perPage, Sort.by("id").descending());
         Page<News> newsPage = newsRepository.findByAuthor(user, pageable);
 
+        return getPageableResponse(newsPage);
+    }
+
+    @NotNull
+    private CustomSuccessResponse<PageableResponse<List<GetNewsOutResponse>>> getPageableResponse(Page<News> newsPage) {
         List<GetNewsOutResponse> newsList = newsPage.getContent().stream()
                 .map(newsMapper::toGetNewsOutResponse)
                 .collect(Collectors.toList());
