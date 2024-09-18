@@ -7,10 +7,12 @@ import dev.mirrex.dto.response.PageableResponse;
 import dev.mirrex.dto.response.baseResponse.BaseSuccessResponse;
 import dev.mirrex.dto.response.baseResponse.CustomSuccessResponse;
 import dev.mirrex.services.NewsService;
+import dev.mirrex.util.Constants;
 import dev.mirrex.util.ValidationConstants;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/news")
@@ -58,5 +61,16 @@ public class NewsController {
             @RequestParam @Min(value = 1, message = ValidationConstants.TASKS_PER_PAGE_GREATER_OR_EQUAL_1)
             @Max(value = 100, message = ValidationConstants.TASKS_PER_PAGE_LESS_OR_EQUAL_100) Integer perPage) {
         return ResponseEntity.ok(newsService.getNews(page, perPage));
+    }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<CustomSuccessResponse<PageableResponse<List<GetNewsOutResponse>>>> getUserNews(
+            @PathVariable @Pattern(regexp = Constants.UUID_REGEX, message = ValidationConstants.MAX_UPLOAD_SIZE_EXCEEDED) String userId,
+            @RequestParam @Min(value = 1, message = ValidationConstants.TASKS_PAGE_GREATER_OR_EQUAL_1) Integer page,
+            @RequestParam @Min(value = 1, message = ValidationConstants.TASKS_PER_PAGE_GREATER_OR_EQUAL_1)
+            @Max(value = 100, message = ValidationConstants.TASKS_PER_PAGE_LESS_OR_EQUAL_100) Integer perPage) {
+
+        UUID userUUID = UUID.fromString(userId);
+        return ResponseEntity.ok(newsService.getUserNews(userUUID, page, perPage));
     }
 }

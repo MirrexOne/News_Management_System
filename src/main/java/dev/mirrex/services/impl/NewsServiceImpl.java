@@ -12,6 +12,7 @@ import dev.mirrex.entities.User;
 import dev.mirrex.exceptionHandlers.CustomException;
 import dev.mirrex.mappers.NewsMapper;
 import dev.mirrex.repositories.NewsRepository;
+import dev.mirrex.repositories.UserRepository;
 import dev.mirrex.services.NewsService;
 import dev.mirrex.services.TagService;
 import dev.mirrex.services.UserService;
@@ -23,9 +24,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,6 +36,8 @@ public class NewsServiceImpl implements NewsService {
     private final NewsRepository newsRepository;
 
     private final TagService tagService;
+
+    private final UserRepository userRepository;
 
     private final UserService userService;
 
@@ -102,6 +105,26 @@ public class NewsServiceImpl implements NewsService {
 
         PageableResponse<List<GetNewsOutResponse>> pageableResponse = new PageableResponse<>(
                 newsDtoList,
+                newsPage.getTotalElements()
+        );
+
+        return new CustomSuccessResponse<>(pageableResponse);
+    }
+
+    @Override
+    public CustomSuccessResponse<PageableResponse<List<GetNewsOutResponse>>> getUserNews(UUID userId, Integer page, Integer perPage) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+
+        Pageable pageable = PageRequest.of(page - 1, perPage, Sort.by("id").descending());
+        Page<News> newsPage = newsRepository.findByAuthor(user, pageable);
+
+        List<GetNewsOutResponse> newsList = newsPage.getContent().stream()
+                .map(newsMapper::toGetNewsOutResponse)
+                .collect(Collectors.toList());
+
+        PageableResponse<List<GetNewsOutResponse>> pageableResponse = new PageableResponse<>(
+                newsList,
                 newsPage.getTotalElements()
         );
 
