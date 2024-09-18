@@ -33,12 +33,9 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers(HttpMethod.POST,"/news").authenticated()
-                        .requestMatchers(HttpMethod.PUT,"/news/{id}").authenticated()
-                        .requestMatchers(HttpMethod.DELETE,"/news/{id}").authenticated()
-                        .requestMatchers(HttpMethod.GET,"/news/user/{userId}").authenticated()
                         .requestMatchers(HttpMethod.GET,"/news").permitAll()
                         .requestMatchers(HttpMethod.GET,"/news/find").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/news/user/{userId}").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, userDetailsService),

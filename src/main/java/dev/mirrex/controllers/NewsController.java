@@ -65,7 +65,8 @@ public class NewsController {
 
     @GetMapping("/user/{userId}")
     public ResponseEntity<CustomSuccessResponse<PageableResponse<List<GetNewsOutResponse>>>> getUserNews(
-            @PathVariable @Pattern(regexp = Constants.UUID_REGEX, message = ValidationConstants.MAX_UPLOAD_SIZE_EXCEEDED) String userId,
+            @PathVariable @Pattern(regexp = Constants.UUID_REGEX,
+                    message = ValidationConstants.MAX_UPLOAD_SIZE_EXCEEDED) String userId,
             @RequestParam @Min(value = 1, message = ValidationConstants.TASKS_PAGE_GREATER_OR_EQUAL_1) Integer page,
             @RequestParam @Min(value = 1, message = ValidationConstants.TASKS_PER_PAGE_GREATER_OR_EQUAL_1)
             @Max(value = 100, message = ValidationConstants.TASKS_PER_PAGE_LESS_OR_EQUAL_100) Integer perPage) {
