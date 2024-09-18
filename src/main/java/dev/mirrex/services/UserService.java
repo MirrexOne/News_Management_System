@@ -8,6 +8,7 @@ import dev.mirrex.dto.response.PublicUserResponse;
 import dev.mirrex.entities.News;
 import dev.mirrex.entities.User;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface UserService {
@@ -25,4 +26,6 @@ public interface UserService {
     User getCurrentUser();
 
     Boolean hasAccessToResource(News news, User currentUser);
+
+    Optional<User> findById(UUID userId);
 }
