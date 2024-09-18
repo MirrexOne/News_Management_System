@@ -4,6 +4,7 @@ import dev.mirrex.exceptionHandlers.CustomEntryPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -32,7 +33,12 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers("/news").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/news").authenticated()
+                        .requestMatchers(HttpMethod.PUT,"/news/{id}").authenticated()
+                        .requestMatchers(HttpMethod.DELETE,"/news/{id}").authenticated()
+                        .requestMatchers(HttpMethod.GET,"/news/user/{userId}").authenticated()
+                        .requestMatchers(HttpMethod.GET,"/news").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/news/find").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, userDetailsService),
