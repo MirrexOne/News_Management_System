@@ -12,7 +12,6 @@ import dev.mirrex.entities.User;
 import dev.mirrex.exceptionHandlers.CustomException;
 import dev.mirrex.mappers.NewsMapper;
 import dev.mirrex.repositories.NewsRepository;
-import dev.mirrex.repositories.UserRepository;
 import dev.mirrex.services.NewsService;
 import dev.mirrex.services.TagService;
 import dev.mirrex.services.UserService;
@@ -37,8 +36,6 @@ public class NewsServiceImpl implements NewsService {
     private final NewsRepository newsRepository;
 
     private final TagService tagService;
-
-    private final UserRepository userRepository;
 
     private final UserService userService;
 
@@ -107,7 +104,7 @@ public class NewsServiceImpl implements NewsService {
     @Override
     public CustomSuccessResponse<PageableResponse<List<GetNewsOutResponse>>> getUserNews(
             UUID userId, Integer page, Integer perPage) {
-        User user = userRepository.findById(userId)
+        User user = userService.findById(userId)
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
         Pageable pageable = PageRequest.of(page - 1, perPage, Sort.by("id").descending());
@@ -126,7 +123,6 @@ public class NewsServiceImpl implements NewsService {
         return getPageableResponse(newsPage);
     }
 
-    @NotNull
     private CustomSuccessResponse<PageableResponse<List<GetNewsOutResponse>>> getPageableResponse(Page<News> newsPage) {
         List<GetNewsOutResponse> newsList = newsPage.getContent().stream()
                 .map(newsMapper::toGetNewsOutResponse)
