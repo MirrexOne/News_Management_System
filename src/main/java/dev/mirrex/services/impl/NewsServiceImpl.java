@@ -96,7 +96,8 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public CustomSuccessResponse<PageableResponse<List<GetNewsOutResponse>>> getNews(Integer page, Integer perPage) {
+    public CustomSuccessResponse<PageableResponse<List<GetNewsOutResponse>>> getNews(
+            Integer page, Integer perPage) {
         Pageable pageable = PageRequest.of(page - 1, perPage, Sort.by("id").descending());
         Page<News> newsPage = newsRepository.findAll(pageable);
 
@@ -104,12 +105,23 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public CustomSuccessResponse<PageableResponse<List<GetNewsOutResponse>>> getUserNews(UUID userId, Integer page, Integer perPage) {
+    public CustomSuccessResponse<PageableResponse<List<GetNewsOutResponse>>> getUserNews(
+            UUID userId, Integer page, Integer perPage) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
         Pageable pageable = PageRequest.of(page - 1, perPage, Sort.by("id").descending());
         Page<News> newsPage = newsRepository.findByAuthor(user, pageable);
+
+        return getPageableResponse(newsPage);
+    }
+
+    @Override
+    public CustomSuccessResponse<PageableResponse<List<GetNewsOutResponse>>> findNews(
+            String author, String keywords, Integer page, Integer perPage, List<String> tags) {
+
+        Pageable pageable = PageRequest.of(page - 1, perPage, Sort.by("id").descending());
+        Page<News> newsPage = newsRepository.findNewsByFilters(author, keywords, tags, pageable);
 
         return getPageableResponse(newsPage);
     }
