@@ -36,6 +36,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET,"/news").permitAll()
                         .requestMatchers(HttpMethod.GET,"/news/find").permitAll()
                         .requestMatchers(HttpMethod.GET,"/news/user/{userId}").permitAll()
+                        .requestMatchers("/file/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, userDetailsService),
