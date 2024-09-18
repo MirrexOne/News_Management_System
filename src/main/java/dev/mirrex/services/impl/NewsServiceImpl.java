@@ -16,7 +16,6 @@ import dev.mirrex.services.NewsService;
 import dev.mirrex.services.TagService;
 import dev.mirrex.services.UserService;
 import dev.mirrex.util.ErrorCode;
-import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
