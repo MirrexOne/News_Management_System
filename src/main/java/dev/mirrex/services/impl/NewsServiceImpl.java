@@ -123,7 +123,6 @@ public class NewsServiceImpl implements NewsService {
         return getPageableResponse(newsPage);
     }
 
-    @NotNull
     private CustomSuccessResponse<PageableResponse<List<GetNewsOutResponse>>> getPageableResponse(Page<News> newsPage) {
         List<GetNewsOutResponse> newsList = newsPage.getContent().stream()
                 .map(newsMapper::toGetNewsOutResponse)
