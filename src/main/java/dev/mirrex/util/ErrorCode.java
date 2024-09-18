@@ -57,7 +57,8 @@ public enum ErrorCode {
     HTTP_MESSAGE_NOT_READABLE_EXCEPTION(47, ValidationConstants.HTTP_MESSAGE_NOT_READABLE_EXCEPTION),
     USER_NOT_AUTHENTICATED(48, ValidationConstants.USER_NOT_AUTHENTICATED),
     NEWS_ACCESS_DENIED(49, "Access to the news item is denied"),
-    FILE_UPLOAD_ERROR(50, "Error occurred while uploading file");
+    FILE_UPLOAD_ERROR(50, "Error occurred while uploading file"),
+    FILE_NOT_FOUND(51, "File not found");
 
     private final Integer code;
 
