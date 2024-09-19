@@ -22,10 +22,10 @@ public class FileServiceImpl implements FileService {
     @Value("${file.upload-dir}")
     private String uploadDir;
 
-    @Value("${file.base-url}")
-    private String baseUrl;
+    @Value("${file-prefix}")
+    private String FILE_PREFIX;
 
-    private static final AtomicLong fileCounter = new AtomicLong(0);
+    private static final AtomicLong counter = new AtomicLong(0);
 
     @PostConstruct
     public void init() {
@@ -39,13 +39,9 @@ public class FileServiceImpl implements FileService {
     @Override
     public String uploadFile(MultipartFile file) {
         try {
-            String originalFilename = file.getOriginalFilename();
-            String fileExtension = originalFilename != null ?
-                    originalFilename.substring(originalFilename.lastIndexOf(".")) : "";
-            String newFileName = String.format("%020d", fileCounter.incrementAndGet()) + fileExtension;
-            Path path = Paths.get(uploadDir + newFileName);
-            Files.write(path, file.getBytes());
-            return baseUrl + "/file/" + newFileName;
+            String newFileName = counter.incrementAndGet() + getFileExtension(file.getOriginalFilename());
+            Files.write(Paths.get(uploadDir, newFileName), file.getBytes());
+            return FILE_PREFIX + newFileName;
         } catch (IOException ex) {
             throw new CustomException(ErrorCode.FILE_UPLOAD_ERROR);
         }
@@ -64,5 +60,11 @@ public class FileServiceImpl implements FileService {
         } catch (MalformedURLException ex) {
             throw new CustomException(ErrorCode.FILE_NOT_FOUND);
         }
+    }
+
+    private String getFileExtension(String fileName) {
+        return fileName != null && fileName.contains(".")
+                ? fileName.substring(fileName.lastIndexOf("."))
+                : "";
     }
 }
