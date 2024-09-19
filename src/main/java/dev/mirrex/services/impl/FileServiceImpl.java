@@ -3,6 +3,7 @@ package dev.mirrex.services.impl;
 import dev.mirrex.exceptionHandlers.CustomException;
 import dev.mirrex.services.FileService;
 import dev.mirrex.util.ErrorCode;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -20,6 +21,15 @@ public class FileServiceImpl implements FileService {
 
     @Value("${file.upload-dir}")
     private String uploadDir;
+
+    @PostConstruct
+    public void init() {
+        try {
+            Files.createDirectories(Paths.get(uploadDir));
+        } catch (IOException e) {
+            throw new CustomException(ErrorCode.FILE_UPLOAD_ERROR);
+        }
+    }
 
     @Override
     public String uploadFile(MultipartFile file) {
