@@ -14,13 +14,18 @@ import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.UUID;
+import java.util.concurrent.atomic.AtomicLong;
 
 @Service
 public class FileServiceImpl implements FileService {
 
     @Value("${file.upload-dir}")
     private String uploadDir;
+
+    @Value("${file.base-url}")
+    private String baseUrl;
+
+    private static final AtomicLong fileCounter = new AtomicLong(0);
 
     @PostConstruct
     public void init() {
@@ -34,10 +39,13 @@ public class FileServiceImpl implements FileService {
     @Override
     public String uploadFile(MultipartFile file) {
         try {
-            String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
-            Path path = Paths.get(uploadDir + fileName);
+            String originalFilename = file.getOriginalFilename();
+            String fileExtension = originalFilename != null ?
+                    originalFilename.substring(originalFilename.lastIndexOf(".")) : "";
+            String newFileName = String.format("%020d", fileCounter.incrementAndGet()) + fileExtension;
+            Path path = Paths.get(uploadDir + newFileName);
             Files.write(path, file.getBytes());
-            return fileName;
+            return baseUrl + "/file/" + newFileName;
         } catch (IOException ex) {
             throw new CustomException(ErrorCode.FILE_UPLOAD_ERROR);
         }
