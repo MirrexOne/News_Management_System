@@ -4,6 +4,7 @@ import dev.mirrex.dto.response.baseResponse.CustomSuccessResponse;
 import dev.mirrex.services.FileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,8 +24,8 @@ public class FileController {
 
     @PostMapping("/uploadFile")
     public ResponseEntity<CustomSuccessResponse<String>> uploadFile(@RequestParam("file") MultipartFile file) {
-        String fileUrl = fileService.uploadFile(file);
-        return ResponseEntity.ok(new CustomSuccessResponse<>(fileUrl));
+        String fileName = fileService.uploadFile(file);
+        return ResponseEntity.ok(new CustomSuccessResponse<>(fileName));
     }
 
     @GetMapping("/{fileName}")
@@ -32,6 +33,7 @@ public class FileController {
         Resource file = fileService.getFile(fileName);
         return ResponseEntity.ok()
                 .contentType(MediaType.MULTIPART_FORM_DATA)
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
                 .body(file);
     }
 }
