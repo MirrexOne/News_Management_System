@@ -10,6 +10,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.multipart.MultipartException;
 import java.util.stream.Collectors;
 import java.util.List;
 
@@ -24,6 +25,13 @@ public class GlobalExceptionHandler {
                 .toList();
         List<Integer> codes = errorCodes.stream().map(ErrorCode::getCode).collect(Collectors.toList());
         return ResponseEntity.badRequest()
+                .body(new CustomSuccessResponse<>(codes, true));
+    }
+
+    @ExceptionHandler(MultipartException.class)
+    public ResponseEntity<CustomSuccessResponse<Void>> handleMultipartException(MultipartException ex) {
+        List<Integer> codes = List.of(ErrorCode.UNKNOWN.getCode());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new CustomSuccessResponse<>(codes, true));
     }
 
