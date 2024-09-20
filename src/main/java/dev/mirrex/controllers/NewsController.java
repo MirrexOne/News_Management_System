@@ -39,20 +39,23 @@ public class NewsController {
     @PostMapping
     public ResponseEntity<CreateNewsSuccessResponse> createNews(
             @Valid @RequestBody NewsCreateRequest newsDto) {
-        return ResponseEntity.ok().body(newsService.createNews(newsDto));
+        CreateNewsSuccessResponse response = newsService.createNews(newsDto);
+        return ResponseEntity.ok().body(response);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<BaseSuccessResponse> deleteNewsById(
             @PathVariable @Min(value = 1, message = ValidationConstants.ID_MUST_BE_POSITIVE) Long id) {
-        return ResponseEntity.ok().body(newsService.deleteNewsById(id));
+        BaseSuccessResponse response = newsService.deleteNewsById(id);
+        return ResponseEntity.ok().body(response);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<BaseSuccessResponse> updateNews(
             @PathVariable @Min(value = 1, message = ValidationConstants.ID_MUST_BE_POSITIVE) Long id,
             @Valid @RequestBody NewsCreateRequest newsUpdate) {
-        return ResponseEntity.ok().body(newsService.updateNewsById(id, newsUpdate));
+        BaseSuccessResponse response = newsService.updateNewsById(id, newsUpdate);
+        return ResponseEntity.ok().body(response);
     }
 
     @GetMapping
@@ -60,7 +63,8 @@ public class NewsController {
             @RequestParam @Min(value = 1, message = ValidationConstants.TASKS_PAGE_GREATER_OR_EQUAL_1) Integer page,
             @RequestParam @Min(value = 1, message = ValidationConstants.TASKS_PER_PAGE_GREATER_OR_EQUAL_1)
             @Max(value = 100, message = ValidationConstants.TASKS_PER_PAGE_LESS_OR_EQUAL_100) Integer perPage) {
-        return ResponseEntity.ok(newsService.getNews(page, perPage));
+        CustomSuccessResponse<PageableResponse<List<GetNewsOutResponse>>> response = newsService.getNews(page, perPage);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/user/{userId}")
@@ -72,7 +76,8 @@ public class NewsController {
             @Max(value = 100, message = ValidationConstants.TASKS_PER_PAGE_LESS_OR_EQUAL_100) Integer perPage) {
 
         UUID userUUID = UUID.fromString(userId);
-        return ResponseEntity.ok(newsService.getUserNews(userUUID, page, perPage));
+        CustomSuccessResponse<PageableResponse<List<GetNewsOutResponse>>> response = newsService.getUserNews(userUUID, page, perPage);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/find")
@@ -83,6 +88,7 @@ public class NewsController {
             @RequestParam @Min(value = 1, message = ValidationConstants.TASKS_PER_PAGE_GREATER_OR_EQUAL_1)
             @Max(value = 100, message = ValidationConstants.TASKS_PER_PAGE_LESS_OR_EQUAL_100) Integer perPage,
             @RequestParam(required = false) List<String> tags) {
-        return ResponseEntity.ok(newsService.findNews(author, keywords, page, perPage, tags));
+        CustomSuccessResponse<PageableResponse<List<GetNewsOutResponse>>> response = newsService.findNews(author, keywords, page, perPage, tags);
+        return ResponseEntity.ok(response);
     }
 }

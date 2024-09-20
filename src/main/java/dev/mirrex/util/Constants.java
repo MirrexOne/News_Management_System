@@ -8,4 +8,9 @@ public interface Constants {
     String HEADER_VALUES = "attachment; filename=\"%s\"";
     String SEPARATOR = ".";
     String NO_FILE_EXTENSION = "";
+    String ANONYMOUS_USER = "anonymous";
+    String ERROR_OCCURRED = "Exception occurred: %s, Handler: %s, Method: %s, User: %s, URL: %s, RequestMethod: %s, Status: %d";
+    String REQUEST_COMPLETED = "Request completed: Handler: %s, Method: %s, User: %s, URL: %s, RequestMethod: %s, Status: %d";
+    String INFO = "INFO";
+    String ERROR = "ERROR";
 }
