@@ -1,4 +1,4 @@
-package dev.mirrex.services;
+package dev.mirrex.security;
 
 import dev.mirrex.exceptionHandlers.CustomException;
 import dev.mirrex.entities.User;

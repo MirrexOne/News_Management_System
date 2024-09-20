@@ -1,4 +1,4 @@
-package dev.mirrex.configurations;
+package dev.mirrex.security;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
