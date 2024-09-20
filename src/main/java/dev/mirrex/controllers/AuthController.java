@@ -23,14 +23,14 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<CustomSuccessResponse<LoginUserResponse>> registerUser(
             @Valid @RequestBody RegisterUserRequest registerUserRequest) {
-        return ResponseEntity.ok()
-                .body(authService.registerUser(registerUserRequest));
+        CustomSuccessResponse<LoginUserResponse> response = authService.registerUser(registerUserRequest);
+        return ResponseEntity.ok().body(response);
     }
 
     @PostMapping("/login")
     public ResponseEntity<CustomSuccessResponse<LoginUserResponse>> loginUser(
             @Valid @RequestBody AuthRequest authRequest) {
-        return ResponseEntity.ok()
-                .body(authService.loginUser(authRequest));
+        CustomSuccessResponse<LoginUserResponse> response = authService.loginUser(authRequest);
+        return ResponseEntity.ok().body(response);
     }
 }
