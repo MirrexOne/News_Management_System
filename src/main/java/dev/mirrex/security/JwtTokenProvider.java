@@ -37,11 +37,14 @@ public class JwtTokenProvider {
     }
 
     private String createToken(Map<String, Object> claims, String subject) {
+        Date now = new Date();
+        Date expiryDate = new Date(now.getTime() + jwtExpiration);
+
         return BEARER + Jwts.builder()
                 .setClaims(claims)
                 .setSubject(subject)
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + jwtExpiration))
+                .setIssuedAt(now)
+                .setExpiration(expiryDate)
                 .signWith(key, SignatureAlgorithm.HS512)
                 .compact();
     }
