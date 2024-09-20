@@ -1,6 +1,8 @@
 package dev.mirrex.configurations;
 
 import dev.mirrex.exceptionHandlers.CustomEntryPoint;
+import dev.mirrex.security.JwtAuthenticationFilter;
+import dev.mirrex.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

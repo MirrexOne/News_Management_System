@@ -16,6 +16,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.concurrent.atomic.AtomicLong;
 
+import static dev.mirrex.util.Constants.NO_FILE_EXTENSION;
+import static dev.mirrex.util.Constants.SEPARATOR;
+
 @Service
 public class FileServiceImpl implements FileService {
 
@@ -39,9 +42,9 @@ public class FileServiceImpl implements FileService {
     @Override
     public String uploadFile(MultipartFile file) {
         try {
-            String newFileName = counter.incrementAndGet() + getFileExtension(file.getOriginalFilename());
-            Files.write(Paths.get(uploadDir, newFileName), file.getBytes());
-            return FILE_PREFIX + newFileName;
+            String fileName = counter.incrementAndGet() + getFileExtension(file.getOriginalFilename());
+            Files.write(Paths.get(uploadDir, fileName), file.getBytes());
+            return FILE_PREFIX + fileName;
         } catch (IOException ex) {
             throw new CustomException(ErrorCode.FILE_UPLOAD_ERROR);
         }
@@ -63,8 +66,8 @@ public class FileServiceImpl implements FileService {
     }
 
     private String getFileExtension(String fileName) {
-        return fileName != null && fileName.contains(".")
-                ? fileName.substring(fileName.lastIndexOf("."))
-                : "";
+        return fileName != null && fileName.contains(SEPARATOR)
+                ? fileName.substring(fileName.lastIndexOf(SEPARATOR))
+                : NO_FILE_EXTENSION;
     }
 }
