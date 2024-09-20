@@ -2,18 +2,16 @@ package dev.mirrex.services.impl;
 
 import dev.mirrex.entities.Log;
 import dev.mirrex.repositories.LogRepository;
-import dev.mirrex.services.LoggingService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 
 @Service
 @AllArgsConstructor
-public class LoggingServiceImpl implements LoggingService {
+public class LoggingServiceImpl {
 
     private final LogRepository logRepository;
 
-    @Override
     public void logInfo(String message, String className, String methodName, String userId, String requestUrl,
                         String requestMethod, Integer responseStatus) {
         Log log = createLog("INFO", message, className, methodName, userId, requestUrl,
@@ -21,7 +19,6 @@ public class LoggingServiceImpl implements LoggingService {
         logRepository.save(log);
     }
 
-    @Override
     public void logError(String message, String className, String methodName, String userId, String requestUrl,
                          String requestMethod, Integer responseStatus) {
         Log log = createLog("ERROR", message, className, methodName, userId, requestUrl,
