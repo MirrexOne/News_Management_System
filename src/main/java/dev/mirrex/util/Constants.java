@@ -8,4 +8,5 @@ public interface Constants {
     String HEADER_VALUES = "attachment; filename=\"%s\"";
     String SEPARATOR = ".";
     String NO_FILE_EXTENSION = "";
+    String ANONYMOUS_USER = "anonymous";
 }
