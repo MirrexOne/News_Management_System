@@ -17,6 +17,8 @@ import dev.mirrex.services.TagService;
 import dev.mirrex.services.UserService;
 import dev.mirrex.util.ErrorCode;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -32,6 +34,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class NewsServiceImpl implements NewsService {
 
+    private static final Logger logger = LoggerFactory.getLogger(NewsServiceImpl.class);
+
     private final NewsRepository newsRepository;
 
     private final TagService tagService;
@@ -43,6 +47,7 @@ public class NewsServiceImpl implements NewsService {
     @Override
     @Transactional
     public CreateNewsSuccessResponse createNews(NewsCreateRequest newsDto) {
+        logger.info("Creating new news with title: {}", newsDto.getTitle());
         User currentUser = userService.getCurrentUser();
 
         News news = newsMapper.toNews(newsDto);
@@ -52,32 +57,44 @@ public class NewsServiceImpl implements NewsService {
         news.setTags(tags);
 
         News savedNews = newsRepository.save(news);
+        logger.info("News created successfully with ID: {}", savedNews.getId());
         return newsMapper.toCreateNewsResponse(savedNews);
     }
 
     @Override
     @Transactional
     public BaseSuccessResponse deleteNewsById(Long id) {
+        logger.info("Attempting to delete news with ID: {}", id);
         User currentUser = userService.getCurrentUser();
         News news = newsRepository.findById(id)
-                .orElseThrow(() -> new CustomException(ErrorCode.NEWS_NOT_FOUND));
+                .orElseThrow(() -> {
+                    logger.warn("News not found with ID: {}", id);
+                    return new CustomException(ErrorCode.NEWS_NOT_FOUND);
+                });
 
         if (!userService.hasAccessToResource(news, currentUser)) {
+            logger.warn("Access denied for user {} to delete news with ID: {}", currentUser.getId(), id);
             throw new CustomException(ErrorCode.NEWS_ACCESS_DENIED);
         }
 
         newsRepository.delete(news);
+        logger.info("News with ID: {} deleted successfully", id);
         return new BaseSuccessResponse();
     }
 
     @Override
     @Transactional
     public BaseSuccessResponse updateNewsById(Long id, NewsCreateRequest newsUpdate) {
+        logger.info("Attempting to update news with ID: {}", id);
         User currentUser = userService.getCurrentUser();
         News news = newsRepository.findById(id)
-                .orElseThrow(() -> new CustomException(ErrorCode.NEWS_NOT_FOUND));
+                .orElseThrow(() -> {
+                    logger.warn("News not found with ID: {}", id);
+                    return new CustomException(ErrorCode.NEWS_NOT_FOUND);
+                });
 
         if (!userService.hasAccessToResource(news, currentUser)) {
+            logger.warn("Access denied for user {} to update news with ID: {}", currentUser.getId(), id);
             throw new CustomException(ErrorCode.NEWS_ACCESS_DENIED);
         }
 
@@ -87,38 +104,41 @@ public class NewsServiceImpl implements NewsService {
         news.setTags(tags);
 
         newsRepository.save(news);
+        logger.info("News with ID: {} updated successfully", id);
 
         return new BaseSuccessResponse();
     }
 
     @Override
-    public CustomSuccessResponse<PageableResponse<List<GetNewsOutResponse>>> getNews(
-            Integer page, Integer perPage) {
+    public CustomSuccessResponse<PageableResponse<List<GetNewsOutResponse>>> getNews(Integer page, Integer perPage) {
+        logger.info("Fetching news page: {}, size: {}", page, perPage);
         Pageable pageable = PageRequest.of(page - 1, perPage, Sort.by("id").descending());
         Page<News> newsPage = newsRepository.findAll(pageable);
-
+        logger.info("Found {} news items", newsPage.getTotalElements());
         return getPageableResponse(newsPage);
     }
 
     @Override
-    public CustomSuccessResponse<PageableResponse<List<GetNewsOutResponse>>> getUserNews(
-            UUID userId, Integer page, Integer perPage) {
+    public CustomSuccessResponse<PageableResponse<List<GetNewsOutResponse>>> getUserNews(UUID userId, Integer page, Integer perPage) {
+        logger.info("Fetching news for user: {}, page: {}, size: {}", userId, page, perPage);
         User user = userService.findById(userId)
-                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+                .orElseThrow(() -> {
+                    logger.warn("User not found with ID: {}", userId);
+                    return new CustomException(ErrorCode.USER_NOT_FOUND);
+                });
 
         Pageable pageable = PageRequest.of(page - 1, perPage, Sort.by("id").descending());
         Page<News> newsPage = newsRepository.findByAuthor(user, pageable);
-
+        logger.info("Found {} news items for user: {}", newsPage.getTotalElements(), userId);
         return getPageableResponse(newsPage);
     }
 
     @Override
-    public CustomSuccessResponse<PageableResponse<List<GetNewsOutResponse>>> findNews(
-            String author, String keywords, Integer page, Integer perPage, List<String> tags) {
-
+    public CustomSuccessResponse<PageableResponse<List<GetNewsOutResponse>>> findNews(String author, String keywords, Integer page, Integer perPage, List<String> tags) {
+        logger.info("Searching news with author: {}, keywords: {}, tags: {}, page: {}, size: {}", author, keywords, tags, page, perPage);
         Pageable pageable = PageRequest.of(page - 1, perPage, Sort.by("id").descending());
         Page<News> newsPage = newsRepository.findNewsByFilters(author, keywords, tags, pageable);
-
+        logger.info("Found {} news items matching the criteria", newsPage.getTotalElements());
         return getPageableResponse(newsPage);
     }
 
