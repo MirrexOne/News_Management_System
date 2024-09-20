@@ -35,7 +35,7 @@ public class FileController {
         Resource file = fileService.getFile(fileName);
         return ResponseEntity.ok()
                 .contentType(MediaType.MULTIPART_FORM_DATA)
-                .header(HttpHeaders.CONTENT_DISPOSITION, HEADER_VALUES + "\"" + fileName + "\"")
+                .header(HttpHeaders.CONTENT_DISPOSITION, HEADER_VALUES.formatted(fileName))
                 .body(file);
     }
 }
