@@ -1,6 +1,8 @@
 package dev.mirrex.configurations;
 
 import dev.mirrex.exceptionHandlers.CustomEntryPoint;
+import dev.mirrex.security.JwtAuthenticationFilter;
+import dev.mirrex.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,6 +38,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET,"/news").permitAll()
                         .requestMatchers(HttpMethod.GET,"/news/find").permitAll()
                         .requestMatchers(HttpMethod.GET,"/news/user/{userId}").permitAll()
+                        .requestMatchers("/file/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, userDetailsService),
