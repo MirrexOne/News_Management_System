@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import static dev.mirrex.util.Constants.HEADER_VALUES;
+
 @RestController
 @RequestMapping("/file")
 @RequiredArgsConstructor
@@ -33,7 +35,7 @@ public class FileController {
         Resource file = fileService.getFile(fileName);
         return ResponseEntity.ok()
                 .contentType(MediaType.MULTIPART_FORM_DATA)
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
+                .header(HttpHeaders.CONTENT_DISPOSITION, HEADER_VALUES + "\"" + fileName + "\"")
                 .body(file);
     }
 }
