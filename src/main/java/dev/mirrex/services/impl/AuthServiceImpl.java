@@ -1,6 +1,6 @@
 package dev.mirrex.services.impl;
 
-import dev.mirrex.configurations.JwtTokenProvider;
+import dev.mirrex.security.JwtTokenProvider;
 import dev.mirrex.dto.request.AuthRequest;
 import dev.mirrex.dto.response.LoginUserResponse;
 import dev.mirrex.dto.request.RegisterUserRequest;
