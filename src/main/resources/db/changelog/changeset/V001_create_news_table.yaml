@@ -32,3 +32,10 @@ databaseChangeLog:
                   type: varchar(255)
                   constraints:
                     nullable: false
+
+        - addForeignKeyConstraint:
+            constraintName: fk_author_id
+            baseTableName: news
+            baseColumnNames: author_id
+            referencedTableName: users
+            referencedColumnNames: id
