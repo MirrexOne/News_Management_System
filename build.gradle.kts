@@ -20,6 +20,7 @@ repositories {
 dependencies {
     implementation("com.fasterxml.uuid:java-uuid-generator:4.0.1")
     implementation("org.mapstruct:mapstruct:1.6.0")
+    implementation("org.liquibase:liquibase-core")
     annotationProcessor("org.mapstruct:mapstruct-processor:1.6.0")
     implementation("com.fasterxml.uuid:java-uuid-generator:4.0.1")
     implementation("org.projectlombok:lombok")
