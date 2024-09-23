@@ -1,0 +1,24 @@
+databaseChangeLog:
+  - changeSet:
+      id: V001
+      author: mirrex
+      changes:
+        - createTable:
+            tableName: news_tags
+            columns:
+              - column:
+                  name: news_id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                    referencedTableName: news
+                    referencedColumnNames: id
+              - column:
+                  name: tag_id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                    referencedTableName: tags
+                    referencedColumnNames: id
