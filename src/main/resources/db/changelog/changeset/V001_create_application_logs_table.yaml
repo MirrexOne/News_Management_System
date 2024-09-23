@@ -1,0 +1,53 @@
+databaseChangeLog:
+  - changeSet:
+      id: V001
+      author: mirrex
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            tableExists:
+              schemaName: application_logs_schema
+              tableName: application_logs
+      changes:
+        - createTable:
+            tableName: application_logs
+            columns:
+              - column:
+                  name: response_status
+                  type: integer
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: timestamp
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: class_name
+                  type: varchar(255)
+              - column:
+                  name: level
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: message
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: method_name
+                  type: varchar(255)
+              - column:
+                  name: request_method
+                  type: varchar(255)
+              - column:
+                  name: request_url
+                  type: varchar(255)
+              - column:
+                  name: user_id
+                  type: varchar(255)
