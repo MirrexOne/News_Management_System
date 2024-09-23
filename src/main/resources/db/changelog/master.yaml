@@ -1,3 +1,11 @@
 databaseChangeLog:
   - include:
+      file: db/changelog/changeset/V001_create_users_table.yaml
+  - include:
+      file: db/changelog/changeset/V001_create_tags_table.yaml
+  - include:
+      file: db/changelog/changeset/V001_create_news_table.yaml
+  - include:
+      file: db/changelog/changeset/V001_create_news_tags_table.yaml
+  - include:
       file: db/changelog/changeset/V001_create_application_logs_table.yaml
