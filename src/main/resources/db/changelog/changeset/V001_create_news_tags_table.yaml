@@ -1,0 +1,36 @@
+databaseChangeLog:
+  - changeSet:
+      id: V001
+      author: mirrex
+      changes:
+        - createTable:
+            tableName: news_tags
+            columns:
+              - column:
+                  name: news_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: tag_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+
+        - addPrimaryKey:
+            tableName: news_tags
+            columnNames: news_id, tag_id
+
+        - addForeignKeyConstraint:
+            constraintName: fk_news_id
+            baseTableName: news_tags
+            baseColumnNames: news_id
+            referencedTableName: news
+            referencedColumnNames: id
+
+        - addForeignKeyConstraint:
+            constraintName: fk_tag_id
+            baseTableName: news_tags
+            baseColumnNames: tag_id
+            referencedTableName: tags
+            referencedColumnNames: id
