@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - changeSet:
+      id: V001
+      author: mirrex
+      changes:
+        - sql:
+            sql: "CREATE SCHEMA IF NOT EXISTS news_schema"

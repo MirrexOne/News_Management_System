@@ -2,6 +2,12 @@ databaseChangeLog:
   - changeSet:
       id: V001
       author: mirrex
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            tableExists:
+              schemaName: news_schema
+              tableName: news_tags
       changes:
         - createTable:
             tableName: news_tags
